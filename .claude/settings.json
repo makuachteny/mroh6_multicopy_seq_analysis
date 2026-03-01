@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:pubmed.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:www.jbc.org)",
+      "WebFetch(domain:pmc.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:www.science.org)",
+      "WebFetch(domain:websites.umich.edu)",
+      "WebFetch(domain:www.nature.com)",
+      "WebFetch(domain:www.semanticscholar.org)",
+      "WebFetch(domain:link.springer.com)"
+    ]
+  }
+}

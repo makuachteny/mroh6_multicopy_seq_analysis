@@ -29,7 +29,7 @@ def parse_blast_fasta(filepath):
         match = re.match(r'(\S+):(c?)(\d+)-(\d+)\s+(.*)', header)
         if not match:
             continue
-        accession = match.group(1)
+        accession = match.group(1) #accession is the part before the colon
         is_complement = match.group(2) == 'c'
         coord1 = int(match.group(3))
         coord2 = int(match.group(4))
