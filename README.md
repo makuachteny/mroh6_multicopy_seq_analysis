@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 # Research
 Determining the mutation rate of MROH06 gene
-=======
+
 # MROH6 Multicopy Analysis Pipeline
 
 Computational pipeline investigating the evolutionary dynamics of MROH6 gene copies in the zebra finch (*Taeniopygia guttata*) genome. The central hypothesis is that the extraordinary copy number of MROH6 (~3,000 BLAST hits) arose through an RNA-intermediate mechanism — reverse transcription or RNA-dependent RNA polymerase activity — which would leave a distinctive molecular signature: elevated mutation rates (RT/RdRp lacks mismatch repair) and transition-biased substitutions.
@@ -328,4 +327,4 @@ If using this pipeline, please cite:
 - Colquitt et al. 2021. Cellular transcriptomics reveals evolutionary identities of songbird vocal circuits. *Science* 371(6530).
 - Kryazhimskiy & Plotkin 2008. The population genetics of dN/dS. *PLoS Genetics* 4(12).
 - Smeds et al. 2016. Direct estimate of the rate of germline mutation in a bird. *Genome Research* 26(9).
->>>>>>> 6effb9c (mutation rate)
+ (mutation rate)
