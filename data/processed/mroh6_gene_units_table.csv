@@ -1,4 +1,4 @@
-locus_id,chrom,accession,anchor_pos,start,end,span,n_hits,total_seq_len,has_exon13,chrom_class,is_ancestral
+gene_unit_id,chrom,accession,anchor_pos,start,end,span,n_hits,total_seq_len,has_exon13,chrom_class,is_ancestral
 0,1,NC_133024.1,40564620.0,40564559,40567781,3223,11,1554,True,macro_derived,False
 1,1A,NC_133025.1,23886301.0,23886240,23889460,3221,11,1701,True,macro_derived,False
 3,6,NC_133031.1,399908.0,396658,399970,3313,11,1419,True,macro_derived,False
