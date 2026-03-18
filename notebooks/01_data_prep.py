@@ -519,8 +519,9 @@ else:
 # Save metadata
 meta_cols = [c for c in gu_filtered.columns if c != 'sequence']
 gu_filtered[meta_cols].to_csv(DATA_PROC / f'{prefix}_gene_units_table.csv', index=False)
-gu_filtered.rename(columns={'gene_unit_id': 'locus_id'})[meta_cols].to_csv(
-    DATA_PROC / f'{prefix}_loci_table.csv', index=False)
+loci_df = gu_filtered.rename(columns={'gene_unit_id': 'locus_id'})
+loci_cols = [c for c in loci_df.columns if c != 'sequence']
+loci_df[loci_cols].to_csv(DATA_PROC / f'{prefix}_loci_table.csv', index=False)
 print(f"  Saved gene unit metadata to {prefix}_gene_units_table.csv")
 
 

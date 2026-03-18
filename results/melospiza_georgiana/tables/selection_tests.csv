@@ -1,0 +1,10 @@
+Test,Value
+Ts/Tv at 4-fold degenerate sites,0.80
+Bird genome average Ts/Tv,~3.5
+PAML M0 kappa,see paml_results.csv
+BEB sites (P>0.95),8
+BEB radical %,8%
+Non-BEB radical %,66%
+Chi-squared (radical/conservative),1610
+Chi-squared p-value,0.00e+00
+BEB sites with derived majority,4/8

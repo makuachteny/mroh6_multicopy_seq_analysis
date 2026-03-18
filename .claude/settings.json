@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ZF_DIR=\"data/processed/zebra_finch\")",
+      "Bash(cp data/processed/mroh6_aligned.fasta \"$ZF_DIR/mroh6_zebra_finch_aligned.fasta\")",
+      "Bash(cp data/processed/mroh6_aligned_trimmed.fasta \"$ZF_DIR/mroh6_zebra_finch_aligned_trimmed.fasta\")",
+      "Bash(cp data/processed/mroh6_loci_table.csv \"$ZF_DIR/mroh6_zebra_finch_loci_table.csv\")",
+      "Bash(cp data/processed/mroh6_gene_units.fasta \"$ZF_DIR/mroh6_zebra_finch_gene_units.fasta\")",
+      "Bash(cp data/processed/mroh6_gene_units_table.csv \"$ZF_DIR/mroh6_zebra_finch_gene_units_table.csv\")",
+      "Bash(mkdir -p \"$ZF_DIR/paml_input\")",
+      "Bash(cp data/processed/paml_input/mroh6_codon.phy \"$ZF_DIR/paml_input/mroh6_zebra_finch_codon.phy\")",
+      "Bash(cp data/processed/paml_input/mroh6_nj.tree \"$ZF_DIR/paml_input/mroh6_zebra_finch_nj.tree\")",
+      "Bash(cp data/processed/paml_input/M*_out.txt \"$ZF_DIR/paml_input/\")",
+      "Read(//Users/makuachtenygatluak/Documents/Research/**)",
+      "Bash(jupyter nbconvert:*)",
+      "Bash(python run_pipeline.py --species melospiza_georgiana --step 2 --no-dash)",
+      "Bash(python run_pipeline.py --species melospiza_georgiana --step 3 --no-dash)"
+    ]
+  }
+}

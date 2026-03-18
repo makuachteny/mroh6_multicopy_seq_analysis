@@ -60,11 +60,13 @@ NOTEBOOKS = PROJECT / 'notebooks'
 CONFIGS = PROJECT / 'configs'
 
 STEPS = [
-    ('01', NOTEBOOKS / '01_data_prep.py',            'Data Preparation'),
-    ('02', NOTEBOOKS / '02_mutation_rate.py',         'Mutation Rate Analysis'),
-    ('03', NOTEBOOKS / '03_dnds_analysis.py',         'dN/dS Selection Analysis'),
-    ('04', NOTEBOOKS / '04_transcriptome_overlay.py', 'Transcriptome Overlay'),
-    ('05', NOTEBOOKS / '05_price_equation.py',        'Price Equation Model'),
+    ('01',  NOTEBOOKS / '01_data_prep.py',            'Data Preparation'),
+    ('02',  NOTEBOOKS / '02_mutation_rate.py',         'Mutation Rate Analysis'),
+    ('03',  NOTEBOOKS / '03_dnds_analysis.py',         'dN/dS Selection Analysis'),
+    ('03b', NOTEBOOKS / '03b_geneconv_analysis.py',    'Gene Conversion (GENECONV)'),
+    ('03c', NOTEBOOKS / '03c_selection_tests.py',      'Polymorphism vs Selection Tests'),
+    ('04',  NOTEBOOKS / '04_transcriptome_overlay.py', 'Transcriptome Overlay'),
+    ('05',  NOTEBOOKS / '05_price_equation.py',        'Price Equation Model'),
 ]
 
 

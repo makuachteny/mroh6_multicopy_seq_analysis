@@ -8,7 +8,7 @@
     "tblastn_files": [
         "data/raw/MG_tBLASTn_MROH6_XP_057884061.1.txt"
     ],
-    "exon13_anchor_file": "MROH6 MG 23 mer BLASTn Melospiza georgiana.txt",
+    "exon13_anchor_file": "data/raw/MROH6 MG 23 mer BLASTn Melospiza georgiana.txt",
     "exon13_anchor_format": "fasta",
 
     "reference_proteins": [
