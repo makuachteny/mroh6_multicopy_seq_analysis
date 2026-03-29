@@ -1260,8 +1260,8 @@ app = dash.Dash(
 
 # -- Tab styling ----
 tab_base = {
-    "padding": "12px 20px",
-    "fontSize": "12px",
+    "padding": "14px 24px",
+    "fontSize": "13px",
     "fontWeight": "500",
     "fontFamily": FONT_HEADING,
     "letterSpacing": "0.3px",
@@ -1286,35 +1286,36 @@ app.layout = html.Div([
         html.Div([
             html.Div([
                 html.H1("MROH Multicopy Analysis", style={
-                    "margin": "0", "fontSize": "20px", "fontWeight": "600",
+                    "margin": "0", "fontSize": "32px", "fontWeight": "700",
                     "fontFamily": FONT_HEADING, "color": C["text"],
-                    "letterSpacing": "-0.5px",
+                    "letterSpacing": "-0.8px", "lineHeight": "1.15",
                 }),
                 html.P("Retrotransposition hypothesis testing pipeline", style={
-                    "margin": "3px 0 0 0", "fontSize": "11px",
-                    "fontFamily": FONT_BODY, "color": C["dim"],
-                    "fontWeight": "400",
+                    "margin": "6px 0 0 0", "fontSize": "14px",
+                    "fontFamily": FONT_BODY, "color": C["muted"],
+                    "fontWeight": "400", "letterSpacing": "0.2px",
                 }),
             ]),
         ], style={"flex": "1"}),
 
         html.Div([
             html.Label("Species", style={
-                "fontSize": "9px", "fontFamily": FONT_HEADING,
+                "fontSize": "10px", "fontFamily": FONT_HEADING,
                 "textTransform": "uppercase", "letterSpacing": "1.5px",
-                "color": C["dim"], "marginBottom": "4px", "display": "block",
+                "fontWeight": "600",
+                "color": C["dim"], "marginBottom": "6px", "display": "block",
             }),
             dcc.Dropdown(
                 id="species-selector",
                 options=_available_species,
                 value=DEFAULT_SPECIES,
                 clearable=False,
-                style={"width": "300px", "fontFamily": FONT_BODY, "fontSize": "13px"},
+                style={"width": "340px", "fontFamily": FONT_BODY, "fontSize": "14px"},
             ),
         ]),
     ], style={
         "display": "flex", "justifyContent": "space-between",
-        "alignItems": "center", "padding": "18px 32px",
+        "alignItems": "center", "padding": "28px 48px",
         "background": C["surface"],
         "borderBottom": f"1px solid {C['border']}",
     }),
