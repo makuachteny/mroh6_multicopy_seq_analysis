@@ -1,18 +1,18 @@
 {
-    "species_name": "Melospiza georgiana",
-    "common_name": "Swamp sparrow",
-    "genome_assembly": "bMelGeo1.pri",
-    "genome_accession": "GCF_028018845.1",
+    "species_name": "Passer domesticus",
+    "common_name": "House sparrow",
+    "genome_assembly": "bPasDom1.hap1",
+    "genome_accession": "GCF_036418965.1",
     "gene_name": "MROH6",
 
     "tblastn_files": [
-        "data/raw/melospiza_georgiana/MG_tBLASTn_MROH6_XP_057884061.1.txt"
+        "data/raw/passer_domesticus/MROH6 PD tBLASTn Passer domesticus NCBI genome.txt"
     ],
-    "exon13_anchor_file": "data/raw/melospiza_georgiana/MROH6 MG 23 mer BLASTn Melospiza georgiana.txt",
-    "exon13_anchor_format": "fasta",
+    "exon13_anchor_file": null,
+    "exon13_anchor_format": null,
 
     "reference_proteins": [
-        "data/raw/melospiza_georgiana/XP_057883527.1.fa"
+        "data/raw/passer_domesticus/XP_064289799.1.fa"
     ],
 
     "total_exons": 15,
@@ -25,7 +25,7 @@
         "13": [501, 545], "14": [546, 600], "15": [601, 643]
     },
 
-    "ancestral_chromosome": "7",
+    "ancestral_chromosome": "10",
     "ancestral_locus_range": null,
     "macro_chromosomes": ["1", "1A", "2", "3", "4", "4A", "5", "6", "7", "8"],
     "sex_chromosomes": ["Z", "W"],

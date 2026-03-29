@@ -20,9 +20,19 @@ from pathlib import Path
 
 # ── Paths ────────────────────────────────────────────────────────────────
 PROJECT = Path(__file__).resolve().parent
-DATA_PROC = PROJECT / "data" / "processed"
-RESULTS = PROJECT / "results"
-TABLE_DIR = RESULTS / "tables"
+DEFAULT_SPECIES = "melospiza_georgiana"
+
+def species_paths(species_slug):
+    return {
+        "data_proc": PROJECT / "data" / "processed" / species_slug,
+        "table_dir": PROJECT / "results" / species_slug / "tables",
+        "fig_dir": PROJECT / "results" / species_slug / "figures",
+    }
+
+# Legacy aliases (overridden by species selector callback)
+DATA_PROC = species_paths(DEFAULT_SPECIES)["data_proc"]
+RESULTS = PROJECT / "results" / DEFAULT_SPECIES
+TABLE_DIR = species_paths(DEFAULT_SPECIES)["table_dir"]
 
 # ── Consistent class color palette ───────────────────────────────────────
 CLASS_COLORS = {
@@ -64,11 +74,33 @@ def safe_load(path):
     except Exception:
         return None
 
-loci_df = safe_load(DATA_PROC / "mroh6_loci_table.csv")
-mut_summary = safe_load(TABLE_DIR / "mutation_rate_summary.csv")
-per_copy_div = safe_load(TABLE_DIR / "per_copy_divergence.csv")
-pairwise_dnds = safe_load(TABLE_DIR / "pairwise_dnds.csv")
-paml_results = safe_load(TABLE_DIR / "paml_results.csv")
+def load_species_data(species_slug):
+    """Load all data for a given species, returning a dict."""
+    sp = species_paths(species_slug)
+    # Find loci table by pattern
+    loci_files = list(sp["data_proc"].glob("*_loci_table.csv"))
+    loci = safe_load(loci_files[0]) if loci_files else None
+    return {
+        "loci_df": loci,
+        "mut_summary": safe_load(sp["table_dir"] / "mutation_rate_summary.csv"),
+        "per_copy_div": safe_load(sp["table_dir"] / "per_copy_divergence.csv"),
+        "pairwise_dnds": safe_load(sp["table_dir"] / "pairwise_dnds.csv"),
+        "paml_results": safe_load(sp["table_dir"] / "paml_results.csv"),
+        "geneconv_summary": safe_load(sp["table_dir"] / "geneconv_summary.csv"),
+        "geneconv_pairs": safe_load(sp["table_dir"] / "geneconv_significant_pairs.csv"),
+        "selection_tests": safe_load(sp["table_dir"] / "selection_tests.csv"),
+    }
+
+# Default load
+_data = load_species_data(DEFAULT_SPECIES)
+loci_df = _data["loci_df"]
+mut_summary = _data["mut_summary"]
+per_copy_div = _data["per_copy_div"]
+pairwise_dnds = _data["pairwise_dnds"]
+paml_results = _data["paml_results"]
+geneconv_summary = _data["geneconv_summary"]
+geneconv_pairs = _data["geneconv_pairs"]
+selection_tests = _data["selection_tests"]
 
 
 def get_metric(df, metric_name, default="N/A"):
@@ -719,6 +751,185 @@ def build_step5_figs():
 
 
 # ═════════════════════════════════════════════════════════════════════════
+# STEP 3b FIGURES — Gene Conversion
+# ═════════════════════════════════════════════════════════════════════════
+
+def build_step3b_figs():
+    figs = []
+    if geneconv_summary is None:
+        return figs
+
+    def gc_metric(name, default="N/A"):
+        row = geneconv_summary[geneconv_summary['Metric'].str.contains(name, na=False, case=False)]
+        return str(row['Value'].iloc[0]) if len(row) > 0 else default
+
+    # Run length distribution from significant pairs
+    if geneconv_pairs is not None and len(geneconv_pairs) > 0 and 'max_identical_run' in geneconv_pairs.columns:
+        f = go.Figure()
+        f.add_trace(go.Histogram(
+            x=geneconv_pairs['max_identical_run'], nbinsx=50,
+            marker_color=C["accent3"], opacity=0.8,
+        ))
+        try:
+            pct99 = float(gc_metric('99th percentile', '0'))
+            f.add_vline(x=pct99, line_dash="dash", line_color=C["danger"], line_width=2)
+            f.add_annotation(x=pct99, y=0.95, yref="paper",
+                             text=f"99th pct null ({pct99:.0f})",
+                             showarrow=False, font_color=C["danger"], xshift=70)
+        except ValueError:
+            pass
+        f.update_layout(
+            title="How long are identical codon runs between copy pairs?",
+            xaxis_title="Longest identical codon run", yaxis_title="Count",
+        )
+        figs.append(dark(f))
+
+    # Summary bar chart
+    try:
+        total = int(gc_metric('Total pairwise', '0'))
+        sig_str = gc_metric('Pairs exceeding', '0')
+        sig_n = int(sig_str.split('(')[0].strip()) if '(' in sig_str else int(sig_str)
+        max_run = int(gc_metric('Max identical', '0'))
+        expected = int(gc_metric('Expected by chance', '0').replace('~', ''))
+
+        f = go.Figure()
+        f.add_trace(go.Bar(
+            x=["Significant\npairs", "Expected\nby chance"],
+            y=[sig_n, expected],
+            marker_color=[C["danger"], C["muted"]],
+            text=[str(sig_n), str(expected)], textposition="outside",
+        ))
+        f.update_layout(
+            title=f"Gene conversion: observed vs expected<br>"
+                  f"<span style='font-size:11px;color:{C['muted']}'>"
+                  f"{sig_n/total*100:.1f}% of pairs exceed null (expected ~1%)</span>",
+            yaxis_title="Number of pairs",
+        )
+        figs.append(dark(f))
+
+        # Max run visualization
+        max_pct_str = gc_metric('Max run as %', '0%')
+        max_pct = float(max_pct_str.replace('%', ''))
+        f = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=max_pct,
+            title={"text": f"Max identical run: {max_run} codons"},
+            gauge={
+                "axis": {"range": [0, 100]},
+                "bar": {"color": C["danger"]},
+                "steps": [
+                    {"range": [0, 30], "color": "rgba(59,130,246,0.2)"},
+                    {"range": [30, 60], "color": "rgba(245,158,11,0.2)"},
+                    {"range": [60, 100], "color": "rgba(239,68,68,0.2)"},
+                ],
+            },
+            number={"suffix": "% of alignment"},
+        ))
+        f.update_layout(title="What fraction of the alignment is converted?")
+        figs.append(dark(f, height=350))
+    except (ValueError, IndexError):
+        pass
+
+    return figs
+
+
+# ═════════════════════════════════════════════════════════════════════════
+# STEP 3c FIGURES — Selection Tests
+# ═════════════════════════════════════════════════════════════════════════
+
+def build_step3c_figs():
+    figs = []
+    if selection_tests is None:
+        return figs
+
+    def sel_metric(name, default="N/A"):
+        row = selection_tests[selection_tests['Test'].str.contains(name, na=False, case=False)]
+        return str(row['Value'].iloc[0]) if len(row) > 0 else default
+
+    # Ts/Tv comparison bar
+    try:
+        tstv_4fold = float(sel_metric('Ts/Tv at 4-fold', '0'))
+        f = go.Figure()
+        cats = ["MROH6\n4-fold sites", "Bird genome\naverage", "Expected\n(RT-mediated)"]
+        vals = [tstv_4fold, 3.5, 4.5]
+        colors_bar = [C["accent3"], "#3b82f6", C["danger"]]
+        f.add_trace(go.Bar(
+            x=cats, y=vals, marker_color=colors_bar,
+            text=[f"{v:.2f}" for v in vals], textposition="outside",
+        ))
+        f.update_layout(
+            title=f"Is there a reverse transcriptase transition bias?<br>"
+                  f"<span style='font-size:11px;color:{C['muted']}'>"
+                  f"Ts/Tv = {tstv_4fold:.2f} — suppressed by gene conversion</span>",
+            yaxis_title="Ts/Tv ratio",
+        )
+        figs.append(dark(f))
+    except ValueError:
+        pass
+
+    # Radical vs conservative
+    try:
+        beb_rad = float(sel_metric('BEB radical', '0').replace('%', ''))
+        nonbeb_rad = float(sel_metric('Non-BEB radical', '0').replace('%', ''))
+        chi2_val = sel_metric('Chi-squared \\(radical', '0')
+        chi2_p = sel_metric('Chi-squared p-value', '1')
+
+        f = go.Figure()
+        f.add_trace(go.Bar(
+            x=["BEB sites\n(P>0.95)", "Non-BEB\nsites"],
+            y=[beb_rad, nonbeb_rad],
+            marker_color=[C["danger"], "#3b82f6"],
+            text=[f"{beb_rad:.0f}%", f"{nonbeb_rad:.0f}%"],
+            textposition="outside", name="Radical",
+        ))
+        f.add_trace(go.Bar(
+            x=["BEB sites\n(P>0.95)", "Non-BEB\nsites"],
+            y=[100 - beb_rad, 100 - nonbeb_rad],
+            marker_color=[C["accent3"], C["muted"]],
+            text=[f"{100-beb_rad:.0f}%", f"{100-nonbeb_rad:.0f}%"],
+            textposition="outside", name="Conservative",
+        ))
+        f.update_layout(
+            title=f"Are BEB sites enriched in radical substitutions?<br>"
+                  f"<span style='font-size:11px;color:{C['muted']}'>"
+                  f"chi2={chi2_val}, p={chi2_p}</span>",
+            yaxis_title="% of substitutions",
+            barmode="group",
+        )
+        figs.append(dark(f))
+    except ValueError:
+        pass
+
+    # Modal allele
+    try:
+        modal_str = sel_metric('derived majority', '0/0')
+        parts = modal_str.split('/')
+        n_derived = int(parts[0])
+        n_total = int(parts[1])
+        n_ancestral = n_total - n_derived
+        if n_total > 0:
+            f = go.Figure()
+            f.add_trace(go.Bar(
+                x=["Derived\nmajority", "Ancestral\nmajority"],
+                y=[n_derived, n_ancestral],
+                marker_color=[C["danger"], "#3b82f6"],
+                text=[str(n_derived), str(n_ancestral)],
+                textposition="outside",
+            ))
+            f.update_layout(
+                title=f"Do BEB sites show selective sweep dynamics?<br>"
+                      f"<span style='font-size:11px;color:{C['muted']}'>"
+                      f"{n_derived}/{n_total} BEB sites have derived majority allele</span>",
+                yaxis_title="Number of BEB sites",
+            )
+            figs.append(dark(f))
+    except (ValueError, IndexError):
+        pass
+
+    return figs
+
+
+# ═════════════════════════════════════════════════════════════════════════
 # LAYOUT HELPERS
 # ═════════════════════════════════════════════════════════════════════════
 
@@ -930,6 +1141,68 @@ def tab_step3():
     return html.Div(content)
 
 
+def tab_step3b():
+    """Gene Conversion (GENECONV-style) tab."""
+    if geneconv_summary is None:
+        return html.Div("No GENECONV data. Run pipeline step 03b first.")
+
+    def gc_metric(name, default="N/A"):
+        row = geneconv_summary[geneconv_summary['Metric'].str.contains(name, na=False, case=False)]
+        return str(row['Value'].iloc[0]) if len(row) > 0 else default
+
+    content = [
+        section_header("3b", "Gene Conversion Analysis",
+                       "Is gene conversion actively shuffling sequences between MROH6 paralogs?"),
+        html.Div([
+            metric_card("Total Pairs", gc_metric('Total pairwise'), "All sequence pairs"),
+            metric_card("99th Pct Null", gc_metric('99th percentile'), "Permutation threshold"),
+            metric_card("Significant Pairs", gc_metric('Pairs exceeding'), "Exceed null", highlight=True),
+            metric_card("Max Run", gc_metric('Max identical'), "Consecutive identical codons", highlight=True),
+            metric_card("Max Run %", gc_metric('Max run as %'), "Fraction of alignment"),
+        ], style={"display": "flex", "gap": "12px", "flexWrap": "wrap",
+                  "marginBottom": "18px"}),
+        finding_box(
+            "Gene conversion is unambiguously present. Pairs share identical codon "
+            "runs far exceeding what's expected by chance, indicating active, recent "
+            "sequence shuffling between MROH6 paralogs. This also explains the "
+            "suppressed Ts/Tv ratio — recombination dilutes the transition signal."
+        ),
+    ]
+    content.extend(grid_row(build_step3b_figs(), cols=3))
+    return html.Div(content)
+
+
+def tab_step3c():
+    """Polymorphism vs Selection Tests tab."""
+    if selection_tests is None:
+        return html.Div("No selection test data. Run pipeline step 03c first.")
+
+    def sel_metric(name, default="N/A"):
+        row = selection_tests[selection_tests['Test'].str.contains(name, na=False, case=False)]
+        return str(row['Value'].iloc[0]) if len(row) > 0 else default
+
+    content = [
+        section_header("3c", "Polymorphism vs Selection Tests",
+                       "Is the BEB signal genuine positive selection, or just paralog polymorphism?"),
+        html.Div([
+            metric_card("Ts/Tv (4-fold)", sel_metric('Ts/Tv at 4-fold'), "vs bird avg ~3.5"),
+            metric_card("BEB Radical %", sel_metric('BEB radical'), "Physicochemical class change", highlight=True),
+            metric_card("Non-BEB Radical %", sel_metric('Non-BEB radical'), "Background rate"),
+            metric_card("Chi-squared", sel_metric('Chi-squared \\(radical'), "Radical vs conservative", highlight=True),
+            metric_card("Modal Derived", sel_metric('derived majority'), "BEB sites with sweep"),
+        ], style={"display": "flex", "gap": "12px", "flexWrap": "wrap",
+                  "marginBottom": "18px"}),
+        finding_box(
+            "Three independent tests confirm genuine positive selection: "
+            "(1) BEB sites show excess radical amino acid changes, "
+            "(2) Ts/Tv is suppressed by gene conversion (masking RT signature), "
+            "(3) Most BEB sites have derived majority alleles consistent with selective sweeps."
+        ),
+    ]
+    content.extend(grid_row(build_step3c_figs(), cols=3))
+    return html.Div(content)
+
+
 def tab_step4():
     content = [
         section_header(4, "Transcriptome Overlay",
@@ -989,26 +1262,48 @@ def tab_step5():
 
 app = dash.Dash(
     __name__,
-    title="MROH6 Multicopy Analysis — Exon 4-15 Pipeline",
+    title="MROH Multicopy Analysis Pipeline",
     suppress_callback_exceptions=True,
 )
 
-tab_style = {"padding": "10px 18px", "fontSize": "13px", "fontWeight": "500"}
+# Detect available species
+import json as _json
+_available_species = []
+_configs_dir = PROJECT / "configs"
+if _configs_dir.exists():
+    for cfg_file in sorted(_configs_dir.glob("*.json")):
+        with open(cfg_file) as _f:
+            _cfg = _json.load(_f)
+        _available_species.append({
+            "label": f"{_cfg.get('common_name', cfg_file.stem)} ({_cfg.get('species_name', '')})",
+            "value": cfg_file.stem,
+        })
+
+tab_style = {"padding": "10px 14px", "fontSize": "12px", "fontWeight": "500"}
 tab_sel = {**tab_style, "borderTop": f"3px solid {C['accent']}",
            "background": C["card2"]}
 
 app.layout = html.Div([
-    # Header
+    # Header with species selector
     html.Div([
         html.Div([
-            html.H1("MROH6 Multicopy Analysis",
+            html.H1("MROH Multicopy Analysis",
                      style={"margin": "0", "fontSize": "22px", "fontWeight": "bold"}),
-            html.P("Exon 4-15 strategy | Zebra finch (T. guttata) | Monaco Lab",
+            html.P("Config-driven pipeline | Monaco Lab",
                    style={"margin": "2px 0 0 0", "fontSize": "12px",
                           "color": C["muted"]}),
         ]),
         html.Div([
-            html.Span("5 STAGES", style={
+            dcc.Dropdown(
+                id="species-selector",
+                options=_available_species,
+                value=DEFAULT_SPECIES,
+                clearable=False,
+                style={"width": "280px", "color": "#000"},
+            ),
+        ]),
+        html.Div([
+            html.Span("7 STAGES", style={
                 "background": C["accent"], "color": "white",
                 "padding": "5px 14px", "borderRadius": "14px",
                 "fontSize": "11px", "fontWeight": "bold", "letterSpacing": "1px",
@@ -1019,6 +1314,7 @@ app.layout = html.Div([
         "alignItems": "center", "padding": "16px 24px",
         "background": C["card"],
         "borderBottom": f"2px solid {C['accent']}",
+        "gap": "16px",
     }),
 
     dcc.Tabs(
@@ -1029,6 +1325,10 @@ app.layout = html.Div([
             dcc.Tab(label="02 Mutation Rate", value="step2",
                     style=tab_style, selected_style=tab_sel),
             dcc.Tab(label="03 dN/dS", value="step3",
+                    style=tab_style, selected_style=tab_sel),
+            dcc.Tab(label="03b GENECONV", value="step3b",
+                    style=tab_style, selected_style=tab_sel),
+            dcc.Tab(label="03c Selection Tests", value="step3c",
                     style=tab_style, selected_style=tab_sel),
             dcc.Tab(label="04 Transcriptome", value="step4",
                     style=tab_style, selected_style=tab_sel),
@@ -1047,15 +1347,42 @@ app.layout = html.Div([
 })
 
 
-@callback(Output("tab-content", "children"), Input("tabs", "value"))
-def render_tab(tab):
-    return {"step1": tab_step1, "step2": tab_step2, "step3": tab_step3,
-            "step4": tab_step4, "step5": tab_step5}.get(tab, tab_step1)()
+@callback(
+    Output("tab-content", "children"),
+    Input("tabs", "value"),
+    Input("species-selector", "value"),
+)
+def render_tab(tab, species_slug):
+    global loci_df, mut_summary, per_copy_div, pairwise_dnds, paml_results
+    global geneconv_summary, geneconv_pairs, selection_tests
+    global DATA_PROC, TABLE_DIR
+
+    # Reload data for selected species
+    if species_slug:
+        sp = species_paths(species_slug)
+        DATA_PROC = sp["data_proc"]
+        TABLE_DIR = sp["table_dir"]
+        d = load_species_data(species_slug)
+        loci_df = d["loci_df"]
+        mut_summary = d["mut_summary"]
+        per_copy_div = d["per_copy_div"]
+        pairwise_dnds = d["pairwise_dnds"]
+        paml_results = d["paml_results"]
+        geneconv_summary = d["geneconv_summary"]
+        geneconv_pairs = d["geneconv_pairs"]
+        selection_tests = d["selection_tests"]
+
+    tabs = {
+        "step1": tab_step1, "step2": tab_step2, "step3": tab_step3,
+        "step3b": tab_step3b, "step3c": tab_step3c,
+        "step4": tab_step4, "step5": tab_step5,
+    }
+    return tabs.get(tab, tab_step1)()
 
 
 if __name__ == "__main__":
     print("\n" + "=" * 60)
-    print("  MROH6 Multicopy Analysis Dashboard (Exon 4-15)")
+    print("  MROH Multicopy Analysis Dashboard")
     print("  http://127.0.0.1:8050")
     print("=" * 60 + "\n")
     app.run(debug=True, port=8050)

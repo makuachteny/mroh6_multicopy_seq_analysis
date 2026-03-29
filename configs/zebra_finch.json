@@ -6,15 +6,15 @@
     "gene_name": "MROH6",
 
     "tblastn_files": [
-        "Zebra finch input files/Taeniopygia guttata tBLASTn MROH6 XP_030133788.3 alignment.txt",
-        "Zebra finch input files/Taeniopygia guttata tBLASTn MROH6 XP_072787743.1 alignment.txt"
+        "data/raw/zebra_finch/Taeniopygia guttata tBLASTn MROH6 XP_030133788.3 alignment.txt",
+        "data/raw/zebra_finch/Taeniopygia guttata tBLASTn MROH6 XP_072787743.1 alignment.txt"
     ],
-    "exon13_anchor_file": "Zebra finch input files/MROH6 exon 13 V5SBW1G0014-Alignment.txt",
+    "exon13_anchor_file": "data/raw/zebra_finch/MROH6 exon 13 V5SBW1G0014-Alignment.txt",
     "exon13_anchor_format": "tabular",
 
     "reference_proteins": [
-        "Zebra finch input files/XP_030133788.3.fa",
-        "Zebra finch input files/XP_072787743.1.fa"
+        "data/raw/zebra_finch/XP_030133788.3.fa",
+        "data/raw/zebra_finch/XP_072787743.1.fa"
     ],
 
     "total_exons": 15,

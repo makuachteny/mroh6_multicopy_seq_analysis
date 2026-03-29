@@ -1,18 +1,18 @@
 {
-    "species_name": "Melospiza georgiana",
-    "common_name": "Swamp sparrow",
-    "genome_assembly": "bMelGeo1.pri",
-    "genome_accession": "GCF_028018845.1",
+    "species_name": "Zonotrichia albicollis",
+    "common_name": "White-throated sparrow",
+    "genome_assembly": "bZonAlb1.hap1",
+    "genome_accession": "GCF_047830755.1",
     "gene_name": "MROH6",
 
     "tblastn_files": [
-        "data/raw/melospiza_georgiana/MG_tBLASTn_MROH6_XP_057884061.1.txt"
+        "data/raw/zonotrichia_albicollis/MROH6 ZA tBLASTn Zonotrichia albicollis alignment.txt"
     ],
-    "exon13_anchor_file": "data/raw/melospiza_georgiana/MROH6 MG 23 mer BLASTn Melospiza georgiana.txt",
-    "exon13_anchor_format": "fasta",
+    "exon13_anchor_file": null,
+    "exon13_anchor_format": null,
 
     "reference_proteins": [
-        "data/raw/melospiza_georgiana/XP_057883527.1.fa"
+        "data/raw/zonotrichia_albicollis/XP_074404220.1.fa"
     ],
 
     "total_exons": 15,

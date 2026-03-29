@@ -1,23 +1,23 @@
 {
-    "species_name": "Melospiza georgiana",
-    "common_name": "Swamp sparrow",
-    "genome_assembly": "bMelGeo1.pri",
-    "genome_accession": "GCF_028018845.1",
+    "species_name": "Lonchura striata",
+    "common_name": "Bengalese finch",
+    "genome_assembly": "lonStrDom1",
+    "genome_accession": "GCA_050655825.1",
     "gene_name": "MROH6",
 
     "tblastn_files": [
-        "data/raw/melospiza_georgiana/MG_tBLASTn_MROH6_XP_057884061.1.txt"
+        "data/raw/lonchura_striata/MROH6 tBLASTn Lonchura striata GenBank genome.txt"
     ],
-    "exon13_anchor_file": "data/raw/melospiza_georgiana/MROH6 MG 23 mer BLASTn Melospiza georgiana.txt",
-    "exon13_anchor_format": "fasta",
+    "exon13_anchor_file": null,
+    "exon13_anchor_format": null,
 
     "reference_proteins": [
-        "data/raw/melospiza_georgiana/XP_057883527.1.fa"
+        "data/raw/zebra_finch/XP_030133788.3.fa"
     ],
 
     "total_exons": 15,
-    "analysis_exon_range": [1, 15],
-    "fallback_exon_range": [4, 15],
+    "analysis_exon_range": [4, 15],
+    "fallback_exon_range": null,
     "exon_boundaries_aa": {
         "1": [1, 30], "2": [31, 55], "3": [56, 96], "4": [97, 140],
         "5": [141, 185], "6": [186, 230], "7": [231, 275], "8": [276, 320],
