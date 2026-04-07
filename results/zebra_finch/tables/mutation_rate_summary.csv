@@ -2,15 +2,15 @@ Metric,Value
 Species,Taeniopygia guttata
 Gene,MROH6
 Number of sequences,399
-Alignment columns,1081
-JC-corrected mean,0.4139
-JC-corrected median,0.4261
-Raw divergence mean,0.2924
-Ts/Tv median,0.8942
+Alignment columns,1086
+JC-corrected mean,0.4351
+JC-corrected median,0.4371
+Raw divergence mean,0.3024
+Ts/Tv median,0.8673
 Genomic baseline,0.03
-Fold elevation,13.8x
-P-value,3.66e-56
+Fold elevation,14.5x
+P-value,9.71e-57
 Ancestral copies,8
 Derived copies,391
-Ancestral→Derived mean JC,0.5490
-Within Ancestral mean JC,0.5084
+Ancestral→Derived mean JC,0.5629
+Within Ancestral mean JC,0.5130

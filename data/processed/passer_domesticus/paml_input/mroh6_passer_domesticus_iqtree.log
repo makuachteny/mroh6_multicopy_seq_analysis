@@ -1,0 +1,253 @@
+IQ-TREE multicore version 2.3.6 for MacOS ARM 64-bit built Jul 30 2024
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
+
+Host:    Makuachs-MacBook-Air.local (SSE4.2, 16 GB RAM)
+Command: iqtree2 -s /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.fasta -st CODON -m MFP -bb 1000 -nt AUTO --prefix /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree -redo --quiet
+Seed:    831357 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Tue Apr  7 15:00:33 2026
+Kernel:  SSE2 - auto-detect threads (8 CPU cores detected)
+
+Reading alignment file /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.fasta ... Fasta format detected
+Reading fasta file: done in 0.000622034 secs using 81.35% CPU
+Alignment most likely contains DNA/RNA sequences
+Converting to codon sequences with genetic code  ...
+WARNING: 1 sites contain only gaps or ambiguous characters.
+Alignment has 40 sequences with 385 columns, 384 distinct patterns
+329 parsimony-informative, 28 singleton sites, 28 constant sites
+                              Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 4.19617e-05 secs using 159.7% CPU
+   1  gu_76_chr10_3904389_3906347    75.06%    passed     99.91%
+   2  gu_82_chr10_5097676_5101047    59.48%    passed     33.38%
+   3  gu_90_chr10_5311707_5313905    71.43%    passed     22.00%
+   4  gu_91_chr10_5322743_5325331    39.48%    passed     73.90%
+   5  gu_93_chr10_5366922_5370094    44.68%    passed     93.52%
+   6  gu_95_chr10_5412627_5415548    58.96%    passed     83.70%
+   7  gu_97_chr10_5457762_5460935    35.06%    passed     70.23%
+   8  gu_100_chr10_5502334_5503887   60.78%    failed      0.92%
+   9  gu_101_chr10_5546195_5548747   38.18%    passed     81.05%
+  10  gu_103_chr10_5555765_5558329   38.18%    passed     86.05%
+  11  gu_105_chr10_5596381_5599552   43.90%    passed     95.72%
+  12  gu_107_chr10_5638807_5641491   72.99%    passed     91.42%
+  13  gu_112_chr10_5716876_5719058   71.69%    passed     15.97%
+  14  gu_114_chr10_5751726_5754333   47.79%    passed     91.95%
+  15  gu_115_chr10_5783064_5785890   45.71%    passed     98.10%
+  16  gu_117_chr10_5822350_5825007   40.78%    passed     75.30%
+  17  gu_119_chr10_5866549_5869720   41.82%    passed     90.22%
+  18  gu_120_chr10_6653849_6656411   47.01%    passed     78.46%
+  19  gu_121_chr10_6697273_6699884   42.86%    passed     74.87%
+  20  gu_122_chr10_6762273_6764880   48.57%    passed     98.90%
+  21  gu_125_chr10_6864401_6867008   48.57%    passed     97.93%
+  22  gu_126_chr10_6927959_6930566   48.83%    passed     96.11%
+  23  gu_137_chr10_7004330_7006047   88.05%    passed     78.94%
+  24  gu_141_chr10_7062143_7064751   37.40%    passed     89.68%
+  25  gu_142_chr10_7115637_7118201   37.14%    passed     92.63%
+  26  gu_143_chr10_7129995_7132566   37.14%    passed     85.45%
+  27  gu_152_chr10_3920597_3923180   31.17%    passed     98.80%
+  28  gu_158_chr10_4955338_4957914   22.34%    passed     99.45%
+  29  gu_160_chr10_4964802_4967378   21.82%    passed     99.51%
+  30  gu_162_chr10_4974271_4976849   21.82%    passed     99.79%
+  31  gu_164_chr10_4983740_4986318   21.82%    passed     99.48%
+  32  gu_166_chr10_4993209_4995787   21.82%    passed     99.48%
+  33  gu_167_chr10_5002025_5004943   18.18%    passed     41.57%
+  34  gu_169_chr10_5070799_5074169   20.26%    passed     80.57%
+  35  gu_172_chr10_5125891_5128499   30.65%    passed     93.09%
+  36  gu_175_chr10_5162767_5165661   27.27%    passed     82.27%
+  37  gu_178_chr10_5230525_5233113   22.08%    passed     97.91%
+  38  gu_180_chr10_5254541_5257140   30.91%    passed     94.69%
+  39  gu_183_chr10_5291381_5294275   27.53%    passed     81.75%
+  40  gu_187_chr10_5431829_5434033   27.53%    passed     39.57%
+WARNING: 8 sequences contain more than 50% gaps/ambiguity
+****  TOTAL                          41.67%  1 sequences failed composition chi2 test (p-value<5%; df=60)
+NOTE: gu_166_chr10_4993209_4995787 is identical to gu_164_chr10_4983740_4986318 but kept for subsequent analysis
+
+Creating fast initial parsimony tree by random order stepwise addition...
+0.220 seconds, parsimony score: 1186 (based on 357 sites)
+Measuring multi-threading efficiency up to 8 CPU cores
+9 trees examined
+Threads: 1 / Time: 8.937 sec / Speedup: 1.000 / Efficiency: 100% / LogL: -19489
+Threads: 2 / Time: 6.934 sec / Speedup: 1.289 / Efficiency: 64% / LogL: -19489
+Threads: 3 / Time: 5.302 sec / Speedup: 1.686 / Efficiency: 56% / LogL: -19489
+Threads: 4 / Time: 4.660 sec / Speedup: 1.918 / Efficiency: 48% / LogL: -19489
+BEST NUMBER OF THREADS: 3
+
+Perform fast likelihood tree search using GY+F3X4+I+G model...
+Estimate model parameters (epsilon = 5.000)
+Perform nearest neighbor interchange...
+Estimate model parameters (epsilon = 1.000)
+1. Initial log-likelihood: -8790.486
+2. Current log-likelihood: -8789.194
+Optimal log-likelihood: -8789.127
+Nonsynonymous/synonymous ratio (omega): 1.209
+Transition/transversion ratio (kappa): 2.452
+Proportion of invariable sites: 0.000
+Gamma shape alpha: 0.815
+Parameters optimization took 2 rounds (6.365 sec)
+Time for fast ML tree search: 22.636 seconds
+
+NOTE: ModelFinder requires 85 MB RAM!
+ModelFinder will test up to 330 codon models (sample size: 385 epsilon: 0.100) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+  1  GY+F3X4       8557.827     88  17291.655    17344.574    17639.540
+  2  GY+F3X4+I     8543.266     89  17264.532    17318.837    17616.371
+  3  GY+F3X4+G4    8469.861     89  17117.723    17172.028    17469.561
+  4  GY+F3X4+I+G4  8469.860     90  17119.720    17175.435    17475.512
+  5  GY+F3X4+R2    8474.153     90  17128.307    17184.021    17484.099
+  6  GY+F3X4+R3    8461.106     92  17106.213    17164.815    17469.911
+  7  GY+F3X4+R4    8461.077     94  17110.154    17171.740    17481.759
+ 14  GY+F3X4+I+R2  8471.614     91  17125.229    17182.376    17484.974
+ 15  GY+F3X4+I+R3  8460.979     93  17107.957    17168.040    17475.609
+ 16  GY+F3X4+I+R4  8460.996     95  17111.993    17175.107    17487.551
+ 25  GY+F1X4+G4    8445.161     83  17056.321    17102.647    17384.440
+ 26  GY+F1X4+I+G4  8445.159     84  17058.319    17105.919    17390.391
+ 28  GY+F1X4+R3    8440.346     86  17052.692    17102.907    17392.671
+ 37  GY+F1X4+I+R3  8440.176     87  17054.352    17105.908    17398.284
+ 47  GY+F+G4       8355.385     140 16990.771    17152.574    17544.225
+ 48  GY+F+I+G4     8355.385     141 16992.771    17157.561    17550.178
+ 50  GY+F+R3       8345.437     143 16976.874    17147.762    17542.188
+ 59  GY+F+I+R3     8345.545     144 16979.091    17153.091    17548.358
+ 69  MGK+F3X4+G4   8404.062     89  16986.124    17040.429    17337.963
+ 70  MGK+F3X4+I+G4 8404.061     90  16988.122    17043.836    17343.914
+ 72  MGK+F3X4+R3   8397.132     92  16978.264    17036.867    17341.962
+ 81  MGK+F3X4+I+R3 8397.149     93  16980.299    17040.381    17347.950
+ 91  MGK+F1X4+G4   8396.695     83  16959.390    17005.716    17287.509
+ 92  MGK+F1X4+I+G4 8396.695     84  16961.390    17008.990    17293.463
+ 94  MGK+F1X4+R3   8391.419     86  16954.839    17005.053    17294.818
+103  MGK+F1X4+I+R3 8391.448     87  16956.895    17008.451    17300.828
+113  MG+F3X4+G4    8401.074     88  16978.149    17031.068    17326.034
+114  MG+F3X4+I+G4  8401.074     89  16980.148    17034.453    17331.987
+116  MG+F3X4+R3    8397.389     91  16976.777    17033.924    17336.523
+125  MG+F3X4+I+R3  8397.400     92  16978.799    17037.402    17342.498
+135  MG+F1X4+G4    8396.647     82  16957.294    17002.367    17281.460
+136  MG+F1X4+I+G4  8396.647     83  16959.295    17005.620    17287.414
+138  MG+F1X4+R3    8391.422     85  16952.843    17001.739    17288.869
+147  MG+F1X4+I+R3  8391.440     86  16954.880    17005.094    17294.859
+157  KOSI07+F3X4+G4 9123.112     87  18420.225    18471.780    18764.157
+158  KOSI07+F3X4+I+G4 9123.112     88  18422.223    18475.142    18770.109
+160  KOSI07+F3X4+R3 9101.016     90  18382.032    18437.746    18737.824
+169  KOSI07+F3X4+I+R3 9100.944     91  18383.888    18441.034    18743.633
+179  KOSI07+F1X4+G4 9130.664     81  18423.328    18467.170    18743.541
+180  KOSI07+F1X4+I+G4 9130.665     82  18425.330    18470.403    18749.496
+182  KOSI07+F1X4+R3 9124.884     84  18417.767    18465.367    18749.840
+191  KOSI07+F1X4+I+R3 9124.846     85  18419.692    18468.589    18755.718
+201  KOSI07+F+G4   8955.436     138 18186.873    18342.824    18732.420
+202  KOSI07+F+I+G4 8955.437     139 18188.874    18347.731    18738.375
+204  KOSI07+F+R3   8950.032     141 18182.063    18346.853    18739.471
+213  KOSI07+F+I+R3 8950.008     142 18184.016    18351.834    18745.377
+223  KOSI07+FU+G4  9090.187     78  18336.374    18376.648    18644.727
+224  KOSI07+FU+I+G4 9090.187     79  18338.375    18379.817    18650.681
+226  KOSI07+FU+R3  9073.534     81  18309.068    18352.910    18629.281
+235  KOSI07+FU+I+R3 9073.540     82  18311.079    18356.152    18635.245
+245  SCHN05+F3X4+G4 9271.190     87  18716.379    18767.935    19060.311
+246  SCHN05+F3X4+I+G4 9271.189     88  18718.377    18771.296    19066.263
+248  SCHN05+F3X4+R3 9210.970     90  18601.940    18657.655    18957.732
+257  SCHN05+F3X4+I+R3 9210.826     91  18603.652    18660.798    18963.397
+267  SCHN05+F1X4+G4 9238.249     81  18638.498    18682.340    18958.711
+268  SCHN05+F1X4+I+G4 9238.249     82  18640.498    18685.571    18964.664
+270  SCHN05+F1X4+R3 9229.714     84  18627.428    18675.028    18959.500
+279  SCHN05+F1X4+I+R3 9229.677     85  18629.355    18678.251    18965.381
+289  SCHN05+F+G4   8987.258     138 18250.516    18406.467    18796.063
+290  SCHN05+F+I+G4 8987.258     139 18252.516    18411.373    18802.016
+292  SCHN05+F+R3   8980.769     141 18243.538    18408.328    18800.945
+301  SCHN05+F+I+R3 8980.771     142 18245.542    18413.361    18806.903
+311  SCHN05+FU+G4  9053.516     78  18263.033    18303.307    18571.386
+312  SCHN05+FU+I+G4 9053.516     79  18265.033    18306.475    18577.339
+314  SCHN05+FU+R3  9039.005     81  18240.009    18283.851    18560.222
+323  SCHN05+FU+I+R3 9039.013     82  18242.025    18287.098    18566.191
+Akaike Information Criterion:           MG+F1X4+R3
+Corrected Akaike Information Criterion: MG+F1X4+R3
+Bayesian Information Criterion:         MG+F1X4+G4
+Best-fit model: MG+F1X4+G4 chosen according to BIC
+
+All model information printed to /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.model.gz
+CPU time for ModelFinder: 1173.778 seconds (0h:19m:33s)
+Wall-clock time for ModelFinder: 575.987 seconds (0h:9m:35s)
+Generating 1000 samples for ultrafast bootstrap (seed: 831357)...
+
+NOTE: 35 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -8461.198
+2. Current log-likelihood: -8456.419
+Optimal log-likelihood: -8456.419
+Nonsynonymous/synonymous ratio (omega): 1.162
+Transition/transversion ratio (kappa): 2.489
+Gamma shape alpha: 1.816
+Parameters optimization took 2 rounds (6.124 sec)
+Wrote distance file to... 
+Computing ML distances based on estimated model parameters...
+Calculating distance matrix: done in 6.39527 secs using 208.8% CPU
+Computing ML distances took 6.395397 sec (of wall-clock time) 13.354996 sec (of CPU time)
+Setting up auxiliary I and S matrices: done in 0.000155926 secs using 118% CPU
+Computing RapidNJ tree took 0.004176 sec (of wall-clock time) 0.000865 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -8847.915
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 0.130 second
+Computing log-likelihood of 98 initial trees ... 74.206 seconds
+Current best score: -8456.419
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -8371.170
+Iteration 10 / LogL: -8722.800 / Time: 0h:12m:21s
+Iteration 20 / LogL: -8691.945 / Time: 0h:13m:30s
+Finish initializing candidate tree set (20)
+Current best tree score: -8371.170 / CPU time: 221.661
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Iteration 30 / LogL: -8964.206 / Time: 0h:14m:44s (0h:12m:36s left)
+Iteration 40 / LogL: -8718.504 / Time: 0h:16m:8s (0h:10m:14s left)
+Iteration 50 / LogL: -8833.713 / Time: 0h:17m:14s (0h:7m:57s left)
+Log-likelihood cutoff on original alignment: -8440.071
+Iteration 60 / LogL: -8534.294 / Time: 0h:18m:25s (0h:6m:7s left)
+Iteration 70 / LogL: -8548.556 / Time: 0h:19m:26s (0h:4m:25s left)
+Iteration 80 / LogL: -8765.621 / Time: 0h:20m:19s (0h:2m:51s left)
+Iteration 90 / LogL: -8533.725 / Time: 0h:21m:20s (0h:1m:27s left)
+Iteration 100 / LogL: -8624.610 / Time: 0h:22m:17s (0h:0m:7s left)
+Log-likelihood cutoff on original alignment: -8440.971
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.998
+TREE SEARCH COMPLETED AFTER 102 ITERATIONS / Time: 0h:22m:26s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -8371.170
+Optimal log-likelihood: -8371.170
+Nonsynonymous/synonymous ratio (omega): 1.149
+Transition/transversion ratio (kappa): 2.489
+Gamma shape alpha: 2.745
+Parameters optimization took 1 rounds (1.290 sec)
+BEST SCORE FOUND : -8371.170
+Creating bootstrap support values...
+Split supports printed to NEXUS file /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.splits.nex
+Total tree length: 9.257
+
+Total number of iterations: 102
+CPU time used for tree search: 1455.911 sec (0h:24m:15s)
+Wall-clock time used for tree search: 757.352 sec (0h:12m:37s)
+Total CPU time used: 2658.702 sec (0h:44m:18s)
+Total wall-clock time used: 1348.011 sec (0h:22m:28s)
+
+Computing bootstrap consensus tree...
+Reading input file /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.splits.nex...
+40 taxa and 117 splits.
+Consensus tree written to /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.contree
+Reading input trees file /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.contree
+Log-likelihood of consensus tree: -8645.669
+
+Analysis results written to: 
+  IQ-TREE report:                /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.iqtree
+  Maximum-likelihood tree:       /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.treefile
+  Likelihood distances:          /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.splits.nex
+  Consensus tree:                /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.contree
+  Screen log file:               /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_iqtree.log
+
+Date and Time: Tue Apr  7 15:23:02 2026

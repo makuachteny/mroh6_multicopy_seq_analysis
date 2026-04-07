@@ -360,6 +360,56 @@ with open(paml_aln_path, 'w') as f:
         f.write(f"{rec.id:<30s}  {str(rec.seq)}\n")
 print(f"  Wrote PAML alignment: {paml_aln_path.name}")
 
+# Filter out problematic sequences before tree inference:
+# 1. All-gap or mostly-gap (>95% gaps) — IQ-TREE rejects these
+# 2. Duplicate identical sequences — too many cause IQ-TREE assertion failures
+filtered_paml_records = []
+removed_seqs = []
+for rec in paml_records:
+    seq_str = str(rec.seq).replace('-', '').replace('N', '').replace('n', '')
+    gap_frac = 1.0 - len(seq_str) / len(rec.seq) if len(rec.seq) > 0 else 1.0
+    if gap_frac >= 0.95 or len(seq_str) < 30:
+        removed_seqs.append(rec.id)
+    else:
+        filtered_paml_records.append(rec)
+
+if removed_seqs:
+    print(f"  Removed {len(removed_seqs)} all-gap/mostly-gap sequences: {', '.join(removed_seqs[:5])}")
+
+# Deduplicate identical sequences (keep one representative per unique sequence)
+seen_seqs = {}
+dedup_records = []
+dup_count = 0
+for rec in filtered_paml_records:
+    seq_key = str(rec.seq)
+    if seq_key not in seen_seqs:
+        seen_seqs[seq_key] = rec.id
+        dedup_records.append(rec)
+    else:
+        dup_count += 1
+
+if dup_count > 0:
+    print(f"  Removed {dup_count} duplicate identical sequences (kept {len(dedup_records)} unique)")
+    paml_records = dedup_records
+else:
+    paml_records = filtered_paml_records
+
+if removed_seqs or dup_count > 0:
+    # Rewrite PAML alignment with cleaned sequences
+    seq_len = len(paml_records[0].seq)
+    with open(paml_aln_path, 'w') as f:
+        f.write(f"  {len(paml_records)}  {seq_len}\n")
+        for rec in paml_records:
+            f.write(f"{rec.id:<30s}  {str(rec.seq)}\n")
+    print(f"  Rewrote PAML alignment: {len(paml_records)} sequences")
+
+if len(paml_records) < 4:
+    print("  WARNING: Fewer than 4 sequences after filtering — skipping PAML.")
+    print("  Writing empty PAML results for cross-species comparison.")
+    pd.DataFrame(columns=['Model', 'lnL', 'omega', 'kappa', 'np']).to_csv(
+        TABLE_DIR / 'paml_results.csv', index=False)
+    sys.exit(0)
+
 # Build ML tree with IQ-TREE
 # WHY: IQ-TREE uses maximum likelihood with automatic model selection
 # (ModelFinder), producing a statistically rigorous tree with ultrafast

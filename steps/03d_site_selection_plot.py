@@ -651,20 +651,28 @@ print(f"  Saved: {TABLE_DIR / 'per_site_dnds.csv'}")
 # ── 8. Clustering statistics ──────────────────────────────────────────
 print("\n── 7. BEB site clustering statistics ──")
 
+# beb_site_list is only defined when beb_sites is non-empty and alignment was parsed
+beb_site_list = sorted({s['site'] for s in beb_sites}) if beb_sites else []
+clustering_ratio = None
+
 if len(beb_site_list) >= 2:
     distances = [beb_site_list[i+1] - beb_site_list[i]
                  for i in range(len(beb_site_list)-1)]
-    expected_gap = len(rst_sites) / (len(beb_site_list) + 1)
-    clustering_ratio = np.mean(distances) / expected_gap
+    n_total_sites = len(rst_sites) if rst_sites else len(beb_site_list) + 1
+    expected_gap = n_total_sites / (len(beb_site_list) + 1)
+    clustering_ratio = np.mean(distances) / expected_gap if expected_gap > 0 else None
 
     print(f"  BEB sites span: {beb_site_list[0]} to {beb_site_list[-1]} "
           f"(range: {beb_site_list[-1] - beb_site_list[0]} codons)")
     print(f"  Mean inter-BEB distance: {np.mean(distances):.1f} codons")
     print(f"  Min inter-BEB distance: {min(distances)} codons")
     print(f"  Max inter-BEB distance: {max(distances)} codons")
-    print(f"  Expected distance (random): {expected_gap:.1f} codons")
-    print(f"  Clustering ratio: {clustering_ratio:.2f} "
-          f"({'CLUSTERED' if clustering_ratio < 0.5 else 'DISPERSED' if clustering_ratio > 1.5 else 'MODERATE'})")
+    if expected_gap > 0:
+        print(f"  Expected distance (random): {expected_gap:.1f} codons")
+        print(f"  Clustering ratio: {clustering_ratio:.2f} "
+              f"({'CLUSTERED' if clustering_ratio < 0.5 else 'DISPERSED' if clustering_ratio > 1.5 else 'MODERATE'})")
+else:
+    print("  No BEB sites available for clustering analysis")
 
 # ── Summary ────────────────────────────────────────────────────────────
 print("\n" + "=" * 70)
@@ -681,7 +689,7 @@ print(f"    P > 0.95 (*):            {len(beb_sig_95)}")
 print(f"    P > 0.99 (**):           {len(beb_sig_99)}")
 if beb_sites:
     print(f"  BEB mean omega:            {np.mean([s['omega'] for s in beb_sites]):.3f}")
-if len(beb_site_list) >= 2:
+if len(beb_site_list) >= 2 and clustering_ratio is not None:
     print(f"  BEB clustering:            {clustering_ratio:.2f} "
           f"({'Clustered' if clustering_ratio < 0.5 else 'Dispersed' if clustering_ratio > 1.5 else 'Moderate'})")
 print(f"\n  Figures: per_site_dnds.png, beb_site_heatmap.png,")

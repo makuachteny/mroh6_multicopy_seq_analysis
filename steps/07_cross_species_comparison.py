@@ -475,6 +475,391 @@ plt.savefig(FIG_DIR / 'cross_species_heatmap.png', dpi=150, bbox_inches='tight')
 plt.close()
 print(f"  Saved: {FIG_DIR / 'cross_species_heatmap.png'}")
 
+# ── 4b. Presentation-quality comparison figures ──────────────────────
+print("\n── 4b. Generating presentation-quality comparison figures ──")
+
+COMP_FIG_DIR = RESULTS / 'cross_species_figures'
+COMP_FIG_DIR.mkdir(parents=True, exist_ok=True)
+
+# Consistent species ordering and labels
+SPECIES_DISPLAY_ORDER = [
+    "Zebra finch", "Bengalese finch", "House sparrow",
+    "White-throated sparrow", "Swamp sparrow",
+]
+SHORT_LABELS = ["ZF", "WRM", "HS", "WTS", "SS"]
+FULL_LABELS = [
+    "Zebra finch\n(T. guttata)",
+    "White-rumped\nmunia\n(L. striata)",
+    "House sparrow\n(P. domesticus)",
+    "White-throated\nsparrow\n(Z. albicollis)",
+    "Swamp sparrow\n(M. georgiana)",
+]
+PHENO_PAL = ["#E63946", "#457B9D", "#2A9D8F", "#E9C46A", "#F4A261"]
+CHROM_COLORS = {
+    "micro":     "#D62828",
+    "macro":     "#457B9D",
+    "ancestral": "#2A9D8F",
+    "sex":       "#F4A261",
+}
+
+# Build ordered data arrays from the DataFrame
+def get_ordered(col, default=0):
+    vals = []
+    for sp in SPECIES_DISPLAY_ORDER:
+        match = df[df['common_name'] == sp]
+        if len(match) > 0:
+            v = match.iloc[0].get(col, default)
+            vals.append(v if pd.notna(v) else default)
+        else:
+            vals.append(default)
+    return vals
+
+x = np.arange(len(SPECIES_DISPLAY_ORDER))
+width = 0.55
+
+def add_val_labels(ax, bars, fmt="{:.0f}", fs=8, offset=0):
+    for bar in bars:
+        h = bar.get_height()
+        if h > 0:
+            ax.text(bar.get_x() + bar.get_width() / 2, h + offset,
+                    fmt.format(h), ha="center", va="bottom", fontsize=fs)
+
+# ── Fig P1: Copy number + intact fraction ────────────────────────────
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
+
+copies = get_ordered('n_copies')
+bars = ax1.bar(x, copies, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax1, bars, offset=5)
+ax1.set_xticks(x); ax1.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax1.set_ylabel("Total MROH6 copies", fontsize=12)
+ax1.set_title("A.  MROH6 Copy Number", fontsize=13, fontweight="bold", loc="left")
+ax1.spines["top"].set_visible(False); ax1.spines["right"].set_visible(False)
+ax1.set_ylim(0, max(copies) * 1.15)
+
+intact_pct_ord = get_ordered('pct_intact')
+bars2 = ax2.bar(x, intact_pct_ord, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax2, bars2, fmt="{:.1f}%", offset=1)
+ax2.set_xticks(x); ax2.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax2.set_ylabel("Intact copies (≥80% coverage), %", fontsize=12)
+ax2.set_title("B.  Intact Copy Fraction", fontsize=13, fontweight="bold", loc="left")
+ax2.axhline(50, color="grey", ls="--", lw=0.8, alpha=0.5)
+ax2.spines["top"].set_visible(False); ax2.spines["right"].set_visible(False)
+ax2.set_ylim(0, 100)
+
+import matplotlib.patches as mpatches
+legend_handles = [mpatches.Patch(color=PHENO_PAL[i], label=FULL_LABELS[i].replace("\n", " "))
+                  for i in range(5)]
+fig.legend(handles=legend_handles, loc="lower center", ncol=3, fontsize=9,
+           frameon=False, bbox_to_anchor=(0.5, -0.06))
+fig.suptitle("MROH6 Copy Number Across Five Passeriformes", fontsize=15,
+             fontweight="bold", y=1.02)
+plt.tight_layout()
+plt.savefig(COMP_FIG_DIR / '01_copy_number_intact.png', dpi=200, bbox_inches='tight',
+            facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '01_copy_number_intact.png'}")
+
+# ── Fig P2: Chromosomal distribution ─────────────────────────────────
+import csv as csv_mod
+
+SPECIES_DIRS_MAP = {
+    "Zebra finch": "zebra_finch",
+    "Bengalese finch": "lonchura_striata",
+    "House sparrow": "passer_domesticus",
+    "White-throated sparrow": "zonotrichia_albicollis",
+    "Swamp sparrow": "melospiza_georgiana",
+}
+
+chrom_counts = []
+for sp in SPECIES_DISPLAY_ORDER:
+    sp_dir = SPECIES_DIRS_MAP[sp]
+    loci_path = DATA_PROC / sp_dir / f"mroh6_{sp_dir}_loci_table.csv"
+    cats = {"micro": 0, "macro": 0, "ancestral": 0, "sex": 0}
+    if loci_path.exists():
+        with open(loci_path) as f:
+            reader = csv_mod.DictReader(f)
+            for r in reader:
+                cc = r["chrom_class"]
+                if "micro" in cc:
+                    cats["micro"] += 1
+                elif "sex" in cc:
+                    cats["sex"] += 1
+                elif "ancestral" in cc:
+                    cats["ancestral"] += 1
+                else:
+                    cats["macro"] += 1
+    chrom_counts.append(cats)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
+category_order = ["micro", "macro", "ancestral", "sex"]
+cat_labels = ["Microchromosome", "Macrochromosome", "Ancestral (chr7/10)", "Sex (Z/W)"]
+
+bottoms = np.zeros(5)
+for cat, label in zip(category_order, cat_labels):
+    vals = np.array([chrom_counts[i][cat] for i in range(5)])
+    ax1.bar(x, vals, width, bottom=bottoms, color=CHROM_COLORS[cat],
+            edgecolor="white", linewidth=0.5, label=label)
+    for i, v in enumerate(vals):
+        if v > 20:
+            ax1.text(x[i], bottoms[i] + v / 2, str(v),
+                     ha="center", va="center", fontsize=7, color="white", fontweight="bold")
+    bottoms += vals
+ax1.set_xticks(x); ax1.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax1.set_ylabel("Number of MROH6 copies", fontsize=12)
+ax1.set_title("A.  Chromosomal Distribution (counts)", fontsize=13, fontweight="bold", loc="left")
+ax1.legend(fontsize=9, loc="upper left", framealpha=0.9)
+ax1.spines["top"].set_visible(False); ax1.spines["right"].set_visible(False)
+
+totals = np.array([sum(chrom_counts[i].values()) for i in range(5)], dtype=float)
+bottoms = np.zeros(5)
+for cat, label in zip(category_order, cat_labels):
+    vals = np.array([chrom_counts[i][cat] for i in range(5)])
+    pcts = vals / totals * 100
+    ax2.bar(x, pcts, width, bottom=bottoms, color=CHROM_COLORS[cat],
+            edgecolor="white", linewidth=0.5, label=label)
+    for i, v in enumerate(pcts):
+        if v > 8:
+            ax2.text(x[i], bottoms[i] + v / 2, f"{v:.0f}%",
+                     ha="center", va="center", fontsize=7, color="white", fontweight="bold")
+    bottoms += pcts
+ax2.set_xticks(x); ax2.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax2.set_ylabel("% of copies", fontsize=12)
+ax2.set_title("B.  Chromosomal Distribution (proportional)", fontsize=13, fontweight="bold", loc="left")
+ax2.set_ylim(0, 100)
+ax2.spines["top"].set_visible(False); ax2.spines["right"].set_visible(False)
+
+fig.suptitle("MROH6 Macro- vs Microchromosome Distribution", fontsize=15,
+             fontweight="bold", y=1.02)
+plt.tight_layout()
+plt.savefig(COMP_FIG_DIR / '02_chromosomal_distribution.png', dpi=200, bbox_inches='tight',
+            facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '02_chromosomal_distribution.png'}")
+
+# ── Fig P3: Divergence & fold elevation ──────────────────────────────
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
+
+divs = get_ordered('JC_mean')
+bars = ax1.bar(x, divs, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax1, bars, fmt="{:.3f}", fs=9, offset=0.005)
+ax1.axhline(0.03, color="#E63946", ls="--", lw=1.2, alpha=0.7)
+ax1.text(4.4, 0.035, "Genomic\nbaseline\n(0.03)", fontsize=8, color="#E63946", ha="center", va="bottom")
+ax1.set_xticks(x); ax1.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax1.set_ylabel("Mean JC-corrected divergence", fontsize=12)
+ax1.set_title("A.  Pairwise Divergence", fontsize=13, fontweight="bold", loc="left")
+ax1.spines["top"].set_visible(False); ax1.spines["right"].set_visible(False)
+ax1.set_ylim(0, max(divs) * 1.2)
+
+folds = get_ordered('fold_elevation')
+bars2 = ax2.bar(x, folds, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax2, bars2, fmt="{:.1f}×", fs=10, offset=0.2)
+ax2.axhline(1, color="grey", ls="--", lw=0.8, alpha=0.5)
+ax2.set_xticks(x); ax2.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax2.set_ylabel("Fold elevation over genomic baseline", fontsize=12)
+ax2.set_title("B.  Mutation Rate Elevation", fontsize=13, fontweight="bold", loc="left")
+ax2.spines["top"].set_visible(False); ax2.spines["right"].set_visible(False)
+ax2.set_ylim(0, max(folds) * 1.15)
+
+fig.suptitle("MROH6 Sequence Divergence Across Five Passeriformes", fontsize=15,
+             fontweight="bold", y=1.02)
+plt.tight_layout()
+plt.savefig(COMP_FIG_DIR / '03_divergence_fold_elevation.png', dpi=200, bbox_inches='tight',
+            facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '03_divergence_fold_elevation.png'}")
+
+# ── Fig P4: PAML dN/dS and LRT ──────────────────────────────────────
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13, 5.5))
+
+omegas = get_ordered('M0_omega')
+colors_omega = [PHENO_PAL[i] if omegas[i] > 0 else "#cccccc" for i in range(5)]
+bars = ax1.bar(x, omegas, width, color=colors_omega, edgecolor="white", linewidth=0.8)
+for i, w_val in enumerate(omegas):
+    if w_val > 0:
+        ax1.text(x[i], w_val + 0.02, f"{w_val:.3f}", ha="center", va="bottom", fontsize=10)
+    else:
+        ax1.text(x[i], 0.05, "N/A", ha="center", va="bottom", fontsize=9, color="#999999", style="italic")
+ax1.axhline(1.0, color="#E63946", ls="--", lw=1.2, alpha=0.7)
+ax1.text(-0.4, 1.03, "ω = 1\n(neutral)", fontsize=8, color="#E63946", va="bottom")
+ax1.set_xticks(x); ax1.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax1.set_ylabel("M0 ω (dN/dS)", fontsize=12)
+ax1.set_title("A.  Global dN/dS (M0 model)", fontsize=13, fontweight="bold", loc="left")
+ax1.spines["top"].set_visible(False); ax1.spines["right"].set_visible(False)
+valid_omegas = [w for w in omegas if w > 0]
+ax1.set_ylim(0, max(valid_omegas) * 1.25 if valid_omegas else 2.0)
+
+lrt_m1m2 = get_ordered('LRT_M1a_vs_M2a')
+lrt_m7m8 = get_ordered('LRT_M7_vs_M8')
+bw = 0.35
+b1 = ax2.bar(x - bw / 2, lrt_m1m2, bw, color="#457B9D", edgecolor="white", linewidth=0.8, label="M1a vs M2a")
+b2 = ax2.bar(x + bw / 2, lrt_m7m8, bw, color="#E9C46A", edgecolor="white", linewidth=0.8, label="M7 vs M8")
+ax2.axhline(5.99, color="grey", ls=":", lw=1, alpha=0.6)
+ax2.axhline(13.82, color="#E63946", ls="--", lw=1, alpha=0.6)
+ax2.text(4.55, 6.5, "p = 0.05", fontsize=7, color="grey")
+ax2.text(4.55, 14.5, "p = 0.001", fontsize=7, color="#E63946")
+for i in range(5):
+    if lrt_m1m2[i] > 0:
+        ax2.text(x[i] - bw / 2, lrt_m1m2[i] + 0.8, "***", ha="center", fontsize=9, fontweight="bold", color="#457B9D")
+    if lrt_m7m8[i] > 0:
+        ax2.text(x[i] + bw / 2, lrt_m7m8[i] + 0.8, "***", ha="center", fontsize=9, fontweight="bold", color="#E9C46A")
+    if lrt_m1m2[i] == 0 and lrt_m7m8[i] == 0:
+        ax2.text(x[i], 1, "codeml\nnot converged", ha="center", va="bottom", fontsize=7, color="#999999", style="italic")
+ax2.set_xticks(x); ax2.set_xticklabels(SHORT_LABELS, fontsize=11)
+ax2.set_ylabel("2ΔlnL (LRT statistic)", fontsize=12)
+ax2.set_title("B.  Positive Selection LRT", fontsize=13, fontweight="bold", loc="left")
+ax2.legend(fontsize=10, loc="upper left", framealpha=0.9)
+ax2.spines["top"].set_visible(False); ax2.spines["right"].set_visible(False)
+
+fig.suptitle("MROH6 Selection Pressure (PAML codeml Site Models)", fontsize=15,
+             fontweight="bold", y=1.02)
+plt.tight_layout()
+plt.savefig(COMP_FIG_DIR / '04_paml_dnds_lrt.png', dpi=200, bbox_inches='tight', facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '04_paml_dnds_lrt.png'}")
+
+# ── Fig P5: BEB lollipop plots ───────────────────────────────────────
+beb_species = {
+    "Zebra finch":            ("zebra_finch",            PHENO_PAL[0], "ZF"),
+    "White-throated sparrow": ("zonotrichia_albicollis", PHENO_PAL[3], "WTS"),
+    "Swamp sparrow":         ("melospiza_georgiana",     PHENO_PAL[4], "SS"),
+}
+
+fig, axes = plt.subplots(3, 1, figsize=(14, 8), sharex=True, gridspec_kw={"hspace": 0.35})
+max_site = 0
+beb_loaded = {}
+for sp, (sp_dir, color, short) in beb_species.items():
+    beb_path = RESULTS / sp_dir / 'tables' / 'beb_selected_sites.csv'
+    sites = []
+    if beb_path.exists():
+        beb_df_sp = pd.read_csv(beb_path)
+        for _, r in beb_df_sp.iterrows():
+            sites.append({"site": int(r["site"]), "aa": r["aa"], "prob": float(r["prob"]),
+                          "omega": float(r["omega"]), "significance": r.get("significance", "")})
+        if sites:
+            max_site = max(max_site, max(s["site"] for s in sites))
+    beb_loaded[sp] = sites
+
+for idx, (sp, (sp_dir, color, short)) in enumerate(beb_species.items()):
+    ax = axes[idx]
+    sites = beb_loaded[sp]
+    if not sites:
+        ax.text(0.5, 0.5, "No BEB sites", transform=ax.transAxes, ha="center", fontsize=12, color="grey")
+        ax.set_ylabel(short, fontsize=12, fontweight="bold")
+        continue
+
+    for s in sites:
+        alpha = 1.0 if s["significance"] == "**" else (0.8 if s["significance"] == "*" else 0.5)
+        lw = 1.5 if s["significance"] == "**" else (1.2 if s["significance"] == "*" else 1.0)
+        ax.vlines(s["site"], 0, s["prob"], color=color, alpha=alpha * 0.6, linewidth=lw)
+        ax.plot(s["site"], s["prob"], "o", color=color, markersize=5 + s["prob"] * 3,
+                alpha=alpha, markeredgecolor="white", markeredgewidth=0.3)
+        if s["significance"] == "**":
+            ax.text(s["site"], s["prob"] + 0.02, f'{s["aa"]}{s["site"]}', ha="center",
+                    va="bottom", fontsize=7, fontweight="bold", color=color)
+
+    ax.axhline(0.95, color="grey", ls="--", lw=0.8, alpha=0.5)
+    ax.axhline(0.99, color="#E63946", ls="--", lw=0.8, alpha=0.5)
+    if idx == 0:
+        ax.text(max_site + 1, 0.952, "P=0.95", fontsize=7, color="grey", va="center")
+        ax.text(max_site + 1, 0.992, "P=0.99", fontsize=7, color="#E63946", va="center")
+    n_95 = sum(1 for s in sites if s["prob"] >= 0.95)
+    n_99 = sum(1 for s in sites if s["prob"] >= 0.99)
+    ax.text(0.98, 0.95, f"n={len(sites)}  ({n_95} at P≥0.95, {n_99} at P≥0.99)",
+            transform=ax.transAxes, ha="right", va="top", fontsize=9,
+            bbox=dict(boxstyle="round,pad=0.3", facecolor="white", edgecolor="grey", alpha=0.9))
+    ax.set_ylabel(f"BEB P(ω>1)\n{short}", fontsize=10, fontweight="bold")
+    ax.set_ylim(0.4, 1.08)
+    ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+
+axes[-1].set_xlabel("Alignment codon position", fontsize=12)
+axes[-1].set_xlim(0, max_site + 5)
+fig.suptitle("BEB Positively Selected Sites — MROH6 (M2a model)", fontsize=15, fontweight="bold", y=1.01)
+plt.tight_layout()
+plt.savefig(COMP_FIG_DIR / '05_beb_selected_sites.png', dpi=200, bbox_inches='tight', facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '05_beb_selected_sites.png'}")
+
+# ── Fig P6: Summary dashboard ────────────────────────────────────────
+fig = plt.figure(figsize=(18, 11))
+gs2 = gridspec.GridSpec(2, 3, hspace=0.4, wspace=0.35)
+
+# A: Copy number
+ax = fig.add_subplot(gs2[0, 0])
+bars = ax.bar(x, copies, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax, bars, offset=5, fs=8)
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("Total copies"); ax.set_title("A. Copy Number", fontweight="bold", loc="left")
+ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+ax.set_ylim(0, max(copies) * 1.18)
+
+# B: Intact fraction
+ax = fig.add_subplot(gs2[0, 1])
+bars = ax.bar(x, intact_pct_ord, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax, bars, fmt="{:.0f}%", offset=1, fs=8)
+ax.axhline(50, color="grey", ls="--", lw=0.8, alpha=0.5)
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("% intact (≥80%)"); ax.set_title("B. Intact Fraction", fontweight="bold", loc="left")
+ax.set_ylim(0, 105); ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+
+# C: Chromosomal distribution
+ax = fig.add_subplot(gs2[0, 2])
+totals_c = np.array([sum(chrom_counts[i].values()) for i in range(5)], dtype=float)
+bottoms = np.zeros(5)
+for cat, label in zip(category_order, ["Micro", "Macro", "Ancestral", "Sex"]):
+    vals = np.array([chrom_counts[i][cat] for i in range(5)])
+    pcts = vals / totals_c * 100
+    ax.bar(x, pcts, width, bottom=bottoms, color=CHROM_COLORS[cat], edgecolor="white", linewidth=0.5, label=label)
+    bottoms += pcts
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("% of copies"); ax.set_title("C. Chromosome Class", fontweight="bold", loc="left")
+ax.legend(fontsize=8, loc="upper right", framealpha=0.9)
+ax.set_ylim(0, 100); ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+
+# D: Fold elevation
+ax = fig.add_subplot(gs2[1, 0])
+bars = ax.bar(x, folds, width, color=PHENO_PAL, edgecolor="white", linewidth=0.8)
+add_val_labels(ax, bars, fmt="{:.1f}×", offset=0.2, fs=9)
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("Fold over baseline"); ax.set_title("D. Mutation Rate Elevation", fontweight="bold", loc="left")
+ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+ax.set_ylim(0, max(folds) * 1.18)
+
+# E: dN/dS (M0)
+ax = fig.add_subplot(gs2[1, 1])
+colors_o2 = [PHENO_PAL[i] if omegas[i] > 0 else "#cccccc" for i in range(5)]
+bars = ax.bar(x, omegas, width, color=colors_o2, edgecolor="white", linewidth=0.8)
+for i, w_val in enumerate(omegas):
+    if w_val > 0:
+        ax.text(x[i], w_val + 0.02, f"{w_val:.2f}", ha="center", va="bottom", fontsize=9)
+    else:
+        ax.text(x[i], 0.05, "N/A", ha="center", fontsize=8, color="#999", style="italic")
+ax.axhline(1.0, color="#E63946", ls="--", lw=1, alpha=0.6)
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("M0 ω (dN/dS)"); ax.set_title("E. Global dN/dS", fontweight="bold", loc="left")
+ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+ax.set_ylim(0, 2.0)
+
+# F: BEB sites
+ax = fig.add_subplot(gs2[1, 2])
+beb_all_ord = get_ordered('BEB_total')
+beb_95_ord = get_ordered('BEB_sites_95')
+beb_99_ord = get_ordered('BEB_sig_99')
+bw3 = 0.25
+ax.bar(x - bw3, beb_all_ord, bw3, color=PHENO_PAL, edgecolor="white", label="All BEB", alpha=0.5)
+ax.bar(x, beb_95_ord, bw3, color=PHENO_PAL, edgecolor="white", label="P ≥ 0.95", alpha=0.75)
+ax.bar(x + bw3, beb_99_ord, bw3, color=PHENO_PAL, edgecolor="white", label="P ≥ 0.99")
+ax.set_xticks(x); ax.set_xticklabels(SHORT_LABELS, fontsize=10)
+ax.set_ylabel("Number of BEB sites"); ax.set_title("F. BEB Selected Sites", fontweight="bold", loc="left")
+ax.legend(fontsize=8, loc="upper left", framealpha=0.9)
+ax.spines["top"].set_visible(False); ax.spines["right"].set_visible(False)
+
+fig.suptitle("MROH6 Cross-Species Comparison — Five Passeriformes", fontsize=17, fontweight="bold", y=1.01)
+plt.savefig(COMP_FIG_DIR / '06_summary_dashboard.png', dpi=250, bbox_inches='tight', facecolor='white')
+plt.close()
+print(f"  Saved: {COMP_FIG_DIR / '06_summary_dashboard.png'}")
+
+print(f"\n  All presentation figures saved to {COMP_FIG_DIR}/")
+
 # ── 5. Key findings ──────────────────────────────────────────────────
 print("\n── 5. Key Findings ──")
 

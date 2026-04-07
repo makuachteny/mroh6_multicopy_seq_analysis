@@ -1,5 +1,5 @@
       seqfile = /Users/makuachtenygatluak/Documents/Research/data/processed/lonchura_striata/paml_input/mroh6_lonchura_striata_codon.phy
-      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/lonchura_striata/paml_input/mroh6_lonchura_striata_nj.tree
+      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/lonchura_striata/paml_input/mroh6_lonchura_striata_ml.tree
       outfile = /Users/makuachtenygatluak/Documents/Research/data/processed/lonchura_striata/paml_input/M7_out.txt
       noisy = 0
       verbose = 0

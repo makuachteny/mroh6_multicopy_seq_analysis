@@ -1,5 +1,5 @@
       seqfile = /Users/makuachtenygatluak/Documents/Research/data/processed/melospiza_georgiana/paml_input/mroh6_melospiza_georgiana_codon.phy
-      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/melospiza_georgiana/paml_input/mroh6_melospiza_georgiana_nj.tree
+      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/melospiza_georgiana/paml_input/mroh6_melospiza_georgiana_ml.tree
       outfile = /Users/makuachtenygatluak/Documents/Research/data/processed/melospiza_georgiana/paml_input/M1a_out.txt
       noisy = 0
       verbose = 0

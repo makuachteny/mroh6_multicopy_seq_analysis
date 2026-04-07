@@ -1,5 +1,5 @@
       seqfile = /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_codon.phy
-      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_nj.tree
+      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_ml.tree
       outfile = /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/M0_out.txt
       noisy = 0
       verbose = 0

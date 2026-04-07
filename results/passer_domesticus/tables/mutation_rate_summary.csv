@@ -2,15 +2,15 @@ Metric,Value
 Species,Passer domesticus
 Gene,MROH6
 Number of sequences,302
-Alignment columns,1297
-JC-corrected mean,0.4572
-JC-corrected median,0.4604
-Raw divergence mean,0.3218
-Ts/Tv median,0.8442
+Alignment columns,1157
+JC-corrected mean,0.4667
+JC-corrected median,0.4776
+Raw divergence mean,0.3279
+Ts/Tv median,0.8288
 Genomic baseline,0.03
-Fold elevation,15.2x
-P-value,1.04e-52
+Fold elevation,15.6x
+P-value,1.50e-53
 Ancestral copies,97
 Derived copies,205
-Ancestral→Derived mean JC,0.4978
-Within Ancestral mean JC,0.4025
+Ancestral→Derived mean JC,0.5035
+Within Ancestral mean JC,0.4070

@@ -1,6 +1,6 @@
 Species,Gene Copies,Intact (>=80%),% Intact,Mean Divergence (JC),Fold Elevation,M0 omega (dN/dS),M0 kappa (Ts/Tv),Median Pairwise omega,BEB Sites (all),BEB Sites (P>0.95),BEB Sites (P>0.99),BEB Mean omega,MROH % of Span,HEAT Repeats/Copy
 Bengalese finch,507,57,11.2,0.393,13.1,,,0.33,0,0,0,,57.0,8.2
-Swamp sparrow,536,52,9.7,0.308,10.3,1.573,2.826,0.137,16,8,5,4.273,38.5,11.4
-House sparrow,302,158,52.3,0.457,15.2,,,0.26,0,0,0,,53.4,12.6
-Zebra finch,399,302,75.7,0.414,13.8,1.216,2.193,0.384,21,7,6,2.353,43.4,12.5
-White-throated sparrow,325,7,2.2,0.451,15.0,1.459,2.042,0.272,55,15,5,2.218,57.0,10.8
+Swamp sparrow,536,52,9.7,0.308,10.3,1.36,2.638,0.137,15,1,0,2.66,38.5,11.4
+House sparrow,302,158,52.3,0.467,15.6,,,0.268,0,0,0,,53.4,12.6
+Zebra finch,399,302,75.7,0.415,13.8,0.752,2.032,0.387,13,1,1,1.578,43.4,12.5
+White-throated sparrow,325,7,2.2,0.447,14.9,1.128,1.906,0.284,43,1,0,1.445,57.0,10.8

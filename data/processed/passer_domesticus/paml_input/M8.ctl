@@ -1,5 +1,5 @@
       seqfile = /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_codon.phy
-      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_nj.tree
+      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/mroh6_passer_domesticus_ml.tree
       outfile = /Users/makuachtenygatluak/Documents/Research/data/processed/passer_domesticus/paml_input/M8_out.txt
       noisy = 0
       verbose = 0

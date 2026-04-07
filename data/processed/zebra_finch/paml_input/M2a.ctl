@@ -1,5 +1,5 @@
       seqfile = /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_codon.phy
-      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_nj.tree
+      treefile = /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_ml.tree
       outfile = /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/M2a_out.txt
       noisy = 0
       verbose = 0

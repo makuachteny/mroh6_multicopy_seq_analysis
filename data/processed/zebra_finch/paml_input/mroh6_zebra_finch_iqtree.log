@@ -1,0 +1,245 @@
+IQ-TREE multicore version 2.3.6 for MacOS ARM 64-bit built Jul 30 2024
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
+
+Host:    Makuachs-MacBook-Air.local (SSE4.2, 16 GB RAM)
+Command: iqtree2 -s /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.fasta -st CODON -m MFP -bb 1000 -nt AUTO --prefix /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree -redo --quiet
+Seed:    781102 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Tue Apr  7 16:18:07 2026
+Kernel:  SSE2 - auto-detect threads (8 CPU cores detected)
+
+Reading alignment file /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.fasta ... Fasta format detected
+Reading fasta file: done in 0.000443935 secs using 85.37% CPU
+Alignment most likely contains DNA/RNA sequences
+Converting to codon sequences with genetic code  ...
+Alignment has 40 sequences with 362 columns, 362 distinct patterns
+325 parsimony-informative, 29 singleton sites, 8 constant sites
+                              Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 2.69413e-05 secs using 96.51% CPU
+   1  gu_10_chr7_731175_734562       17.68%    passed     80.09%
+   2  gu_11_chr7_738853_742240       17.68%    passed     52.56%
+   3  gu_12_chr7_1801915_1805300     11.88%    passed     96.53%
+   4  gu_13_chr7_2238514_2241740     25.69%    passed     65.16%
+   5  gu_14_chr7_3252147_3256307      9.12%    passed     71.46%
+   6  gu_16_chr7_27746860_27751603   14.92%    passed     65.96%
+   7  gu_17_chr7_28831543_28836290    8.01%    passed     68.85%
+   8  gu_18_chr7_29660300_29663599   21.82%    passed     88.86%
+   9  gu_0_chr1_40564559_40567781    19.34%    passed     30.96%
+  10  gu_8_chr6_567247_570559        32.32%    passed     84.42%
+  11  gu_92_chr16_3462961_3465851    28.18%    passed     99.72%
+  12  gu_164_chr28_5959215_5962162   26.80%    passed     97.78%
+  13  gu_379_chr36_2706631_2709913    7.73%    passed     99.99%
+  14  gu_289_chr33_2934751_2938186   16.85%    passed     74.74%
+  15  gu_337_chr35_2484076_2487552   15.19%    passed     99.78%
+  16  gu_106_chr22_195984_199487     17.13%    passed     92.40%
+  17  gu_266_chr31_4849012_4852518   20.44%    passed     94.78%
+  18  gu_181_chr29_1297671_1321050   24.59%    passed     54.96%
+  19  gu_314_chr34_1330178_1333663   17.13%    passed     82.77%
+  20  gu_213_chr30_4699674_4703022   13.54%    passed     98.06%
+  21  gu_274_chr32_3870247_3873732   15.19%    passed     99.79%
+  22  gu_332_chr35_2354715_2358098   18.23%    passed     95.76%
+  23  gu_294_chr33_3090071_3093247   30.66%    passed     61.27%
+  24  gu_194_chr29_2125215_2128460   27.62%    passed     51.57%
+  25  gu_304_chr34_454434_457898      6.08%    passed     99.97%
+  26  gu_372_chr35_3676694_3680014    8.84%    passed     99.92%
+  27  gu_87_chr16_3281440_3284332    28.18%    passed     99.81%
+  28  gu_211_chr30_3971011_3974366    6.35%    passed     99.95%
+  29  gu_197_chr29_2302794_2306041   29.01%    passed     78.78%
+  30  gu_215_chr30_4867654_4871152    9.39%    passed     92.22%
+  31  gu_66_chr16_2556796_2559687    28.18%    passed     99.83%
+  32  gu_54_chr16_2147841_2150731    33.70%    passed     99.87%
+  33  gu_50_chr16_2007994_2010884    28.18%    passed     99.89%
+  34  gu_336_chr35_2470710_2474098    9.12%    passed     99.58%
+  35  gu_53_chr16_2125730_2128685    22.93%    passed     99.78%
+  36  gu_320_chr34_1729344_1732591   18.51%    passed     68.66%
+  37  gu_177_chr29_1121970_1125218   29.28%    passed     71.19%
+  38  gu_179_chr29_1251258_1254746   13.26%    passed     96.65%
+  39  gu_231_chr30_8427008_8430230   14.09%    passed     90.69%
+  40  gu_192_chr29_1991973_1995472   16.57%    passed     93.41%
+****  TOTAL                          18.98%  0 sequences failed composition chi2 test (p-value<5%; df=60)
+
+Creating fast initial parsimony tree by random order stepwise addition...
+0.138 seconds, parsimony score: 1808 (based on 354 sites)
+Measuring multi-threading efficiency up to 8 CPU cores
+Increase to 10 rounds for branch lengths
+11 trees examined
+Threads: 1 / Time: 8.632 sec / Speedup: 1.000 / Efficiency: 100% / LogL: -26559
+Threads: 2 / Time: 5.267 sec / Speedup: 1.639 / Efficiency: 82% / LogL: -26559
+Threads: 3 / Time: 3.787 sec / Speedup: 2.279 / Efficiency: 76% / LogL: -26559
+Threads: 4 / Time: 3.120 sec / Speedup: 2.767 / Efficiency: 69% / LogL: -26559
+Threads: 5 / Time: 2.931 sec / Speedup: 2.945 / Efficiency: 59% / LogL: -26559
+Threads: 6 / Time: 2.935 sec / Speedup: 2.941 / Efficiency: 49% / LogL: -26559
+BEST NUMBER OF THREADS: 5
+
+Perform fast likelihood tree search using GY+F3X4+I+G model...
+Estimate model parameters (epsilon = 5.000)
+Perform nearest neighbor interchange...
+Estimate model parameters (epsilon = 1.000)
+1. Initial log-likelihood: -12019.716
+Optimal log-likelihood: -12019.521
+Nonsynonymous/synonymous ratio (omega): 1.079
+Transition/transversion ratio (kappa): 2.419
+Proportion of invariable sites: 0.001
+Gamma shape alpha: 2.171
+Parameters optimization took 1 rounds (0.912 sec)
+Time for fast ML tree search: 5.425 seconds
+
+NOTE: ModelFinder requires 80 MB RAM!
+ModelFinder will test up to 330 codon models (sample size: 362 epsilon: 0.100) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+  1  GY+F3X4       11991.861    88  24159.723    24217.100    24502.187
+  2  GY+F3X4+I     11966.362    89  24110.725    24169.622    24457.081
+  3  GY+F3X4+G4    11891.856    89  23961.711    24020.608    24308.067
+  4  GY+F3X4+I+G4  11888.320    90  23956.641    24017.084    24306.889
+  5  GY+F3X4+R2    11895.395    90  23970.790    24031.233    24321.038
+  6  GY+F3X4+R3    11887.844    92  23959.688    24023.301    24317.719
+  7  GY+F3X4+R4    11887.692    94  23963.383    24030.274    24329.198
+ 14  GY+F3X4+I+R2  11888.211    91  23958.423    24020.437    24312.562
+ 15  GY+F3X4+I+R3  11886.043    93  23958.086    24023.324    24320.009
+ 25  GY+F1X4+G4    11886.035    83  23938.070    23988.228    24261.076
+ 26  GY+F1X4+I+G4  11882.096    84  23932.192    23983.744    24259.090
+ 36  GY+F1X4+I+R2  11884.427    85  23938.854    23991.825    24269.643
+ 47  GY+F+G4       11706.066    140 23692.132    23870.774    24236.962
+ 48  GY+F+I+G4     11703.570    141 23689.140    23871.158    24237.861
+ 58  GY+F+I+R2     11706.040    142 23696.081    23881.524    24248.694
+ 69  MGK+F3X4+G4   11807.256    89  23792.512    23851.409    24138.868
+ 70  MGK+F3X4+I+G4 11804.120    90  23788.240    23848.683    24138.488
+ 80  MGK+F3X4+I+R2 11805.186    91  23792.373    23854.388    24146.513
+ 91  MGK+F1X4+G4   11806.970    83  23779.941    23830.099    24102.947
+ 92  MGK+F1X4+I+G4 11803.886    84  23775.772    23827.324    24102.670
+102  MGK+F1X4+I+R2 11805.596    85  23781.192    23834.163    24111.982
+113  MG+F3X4+G4    11806.415    88  23788.831    23846.208    24131.296
+114  MG+F3X4+I+G4  11803.460    89  23784.921    23843.818    24131.277
+124  MG+F3X4+I+R2  11805.185    90  23790.370    23850.812    24140.618
+135  MG+F1X4+G4    11806.971    82  23777.942    23826.730    24097.056
+136  MG+F1X4+I+G4  11803.888    83  23773.776    23823.934    24096.782
+146  MG+F1X4+I+R2  11805.595    84  23779.190    23830.742    24106.088
+157  KOSI07+F3X4+G4 13050.999    87  26275.997    26331.881    26614.571
+158  KOSI07+F3X4+I+G4 13048.563    88  26273.126    26330.503    26615.590
+168  KOSI07+F3X4+I+R2 13047.295    89  26272.591    26331.488    26618.947
+179  KOSI07+F1X4+G4 13053.068    81  26268.136    26315.579    26583.360
+180  KOSI07+F1X4+I+G4 13050.544    82  26265.088    26313.876    26584.202
+190  KOSI07+F1X4+I+R2 13056.396    83  26278.791    26328.950    26601.798
+201  KOSI07+F+G4   12880.251    138 26036.503    26208.539    26573.550
+202  KOSI07+F+I+G4 12876.275    139 26030.550    26205.865    26571.488
+212  KOSI07+F+I+R2 12880.390    140 26040.779    26219.422    26585.609
+223  KOSI07+FU+G4  12981.778    78  26119.555    26163.103    26423.103
+224  KOSI07+FU+I+G4 12979.734    79  26117.468    26162.291    26424.908
+234  KOSI07+FU+I+R2 12971.441    80  26102.881    26149.002    26414.213
+245  SCHN05+F3X4+G4 13238.439    87  26650.879    26706.762    26989.452
+246  SCHN05+F3X4+I+G4 13235.854    88  26647.708    26705.085    26990.173
+256  SCHN05+F3X4+I+R2 13218.573    89  26615.147    26674.044    26961.503
+267  SCHN05+F1X4+G4 13219.081    81  26600.161    26647.604    26915.385
+268  SCHN05+F1X4+I+G4 13218.780    82  26601.560    26650.349    26920.675
+278  SCHN05+F1X4+I+R2 13230.596    83  26627.192    26677.350    26950.198
+289  SCHN05+F+G4   12896.504    138 26069.008    26241.044    26606.055
+290  SCHN05+F+I+G4 12893.671    139 26065.341    26240.657    26606.280
+300  SCHN05+F+I+R2 12902.508    140 26085.016    26263.658    26629.846
+311  SCHN05+FU+G4  12913.655    78  25983.310    26026.858    26286.859
+312  SCHN05+FU+I+G4 12911.752    79  25981.505    26026.328    26288.945
+322  SCHN05+FU+I+R2 12913.133    80  25986.266    26032.387    26297.597
+Akaike Information Criterion:           GY+F+I+G4
+Corrected Akaike Information Criterion: MG+F1X4+I+G4
+Bayesian Information Criterion:         MG+F1X4+I+G4
+Best-fit model: MG+F1X4+I+G4 chosen according to BIC
+
+All model information printed to /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.model.gz
+CPU time for ModelFinder: 404.680 seconds (0h:6m:44s)
+Wall-clock time for ModelFinder: 120.754 seconds (0h:2m:0s)
+Generating 1000 samples for ultrafast bootstrap (seed: 781102)...
+
+NOTE: 33 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+Thoroughly optimizing +I+G parameters from 10 start values...
+Init pinv, alpha: 0.000, 2.643 / Estimate: 0.000, 3.197 / LogL: -11823.853
+Init pinv, alpha: 0.002, 2.643 / Estimate: 0.017, 3.682 / LogL: -11818.597
+Init pinv, alpha: 0.005, 2.643 / Estimate: 0.016, 3.663 / LogL: -11818.972
+Init pinv, alpha: 0.007, 2.643 / Estimate: 0.017, 3.656 / LogL: -11819.348
+Init pinv, alpha: 0.010, 2.643 / Estimate: 0.016, 3.633 / LogL: -11819.734
+Init pinv, alpha: 0.012, 2.643 / Estimate: 0.017, 3.627 / LogL: -11820.119
+Init pinv, alpha: 0.015, 2.643 / Estimate: 0.017, 3.619 / LogL: -11820.511
+Init pinv, alpha: 0.017, 2.643 / Estimate: 0.017, 3.611 / LogL: -11820.908
+Init pinv, alpha: 0.020, 2.643 / Estimate: 0.017, 3.598 / LogL: -11821.309
+Init pinv, alpha: 0.022, 2.643 / Estimate: 0.017, 3.587 / LogL: -11821.716
+Optimal pinv,alpha: 0.017, 3.682 / LogL: -11818.597
+
+Parameters optimization took 25.591 sec
+Wrote distance file to... 
+Computing ML distances based on estimated model parameters...
+Calculating distance matrix: done in 2.69962 secs using 458.2% CPU
+Computing ML distances took 2.699722 sec (of wall-clock time) 12.369917 sec (of CPU time)
+Setting up auxiliary I and S matrices: done in 6.69956e-05 secs using 192.5% CPU
+Computing RapidNJ tree took 0.001487 sec (of wall-clock time) 0.000899 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -11956.892
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 0.053 second
+Computing log-likelihood of 98 initial trees ... 20.642 seconds
+Current best score: -11818.597
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -11818.522
+Iteration 10 / LogL: -11953.692 / Time: 0h:2m:58s
+Iteration 20 / LogL: -11960.167 / Time: 0h:3m:6s
+Finish initializing candidate tree set (20)
+Current best tree score: -11818.522 / CPU time: 37.760
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Iteration 30 / LogL: -12067.748 / Time: 0h:3m:34s (0h:3m:48s left)
+Iteration 40 / LogL: -12154.623 / Time: 0h:3m:57s (0h:3m:3s left)
+Iteration 50 / LogL: -11985.018 / Time: 0h:4m:16s (0h:2m:21s left)
+Log-likelihood cutoff on original alignment: -11860.111
+Iteration 60 / LogL: -12422.629 / Time: 0h:4m:43s (0h:1m:53s left)
+Iteration 70 / LogL: -12039.798 / Time: 0h:5m:14s (0h:1m:27s left)
+Iteration 80 / LogL: -12168.284 / Time: 0h:5m:41s (0h:0m:58s left)
+Iteration 90 / LogL: -11974.658 / Time: 0h:6m:10s (0h:0m:30s left)
+Iteration 100 / LogL: -11912.649 / Time: 0h:6m:36s (0h:0m:2s left)
+Log-likelihood cutoff on original alignment: -11860.111
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 1.000
+TREE SEARCH COMPLETED AFTER 102 ITERATIONS / Time: 0h:6m:41s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -11818.522
+Optimal log-likelihood: -11818.522
+Nonsynonymous/synonymous ratio (omega): 1.050
+Transition/transversion ratio (kappa): 2.508
+Proportion of invariable sites: 0.017
+Gamma shape alpha: 3.763
+Parameters optimization took 1 rounds (0.981 sec)
+BEST SCORE FOUND : -11818.522
+Creating bootstrap support values...
+Split supports printed to NEXUS file /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.splits.nex
+Total tree length: 11.016
+
+Total number of iterations: 102
+CPU time used for tree search: 850.574 sec (0h:14m:10s)
+Wall-clock time used for tree search: 252.228 sec (0h:4m:12s)
+Total CPU time used: 1367.359 sec (0h:22m:47s)
+Total wall-clock time used: 402.529 sec (0h:6m:42s)
+
+Computing bootstrap consensus tree...
+Reading input file /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.splits.nex...
+40 taxa and 127 splits.
+Consensus tree written to /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.contree
+Reading input trees file /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.contree
+Log-likelihood of consensus tree: -12004.194
+
+Analysis results written to: 
+  IQ-TREE report:                /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.iqtree
+  Maximum-likelihood tree:       /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.treefile
+  Likelihood distances:          /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.splits.nex
+  Consensus tree:                /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.contree
+  Screen log file:               /Users/makuachtenygatluak/Documents/Research/data/processed/zebra_finch/paml_input/mroh6_zebra_finch_iqtree.log
+
+Date and Time: Tue Apr  7 16:24:50 2026

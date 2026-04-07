@@ -1,6 +1,6 @@
 Species,M1a vs M2a (2dlnL),M1a vs M2a (p),M1a vs M2a (sig),M7 vs M8 (2dlnL),M7 vs M8 (p),M7 vs M8 (sig)
 Bengalese finch,N/A,N/A,N/A,N/A,N/A,N/A
-Swamp sparrow,30.35,2.57e-07,***,23.75,6.95e-06,***
+Swamp sparrow,7.84,1.99e-02,*,7.84,1.99e-02,*
 House sparrow,N/A,N/A,N/A,N/A,N/A,N/A
-Zebra finch,39.59,2.53e-09,***,68.73,1.19e-15,***
-White-throated sparrow,35.40,2.06e-08,***,36.03,1.50e-08,***
+Zebra finch,10.56,5.09e-03,**,14.06,8.83e-04,***
+White-throated sparrow,8.78,1.24e-02,*,9.31,9.52e-03,**

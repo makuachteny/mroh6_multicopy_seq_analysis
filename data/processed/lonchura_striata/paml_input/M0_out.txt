@@ -1,6 +1,6 @@
 CODONML (in paml version 4.10.9, 7 May 2025)  /Users/makuachtenygatluak/Documents/Research/data/processed/lonchura_striata/paml_input/mroh6_lonchura_striata_codon.phy
 Model: One dN/dS ratio, 
 Codon frequency model: F3x4
-ns =  40  ls =   0
+ns =  39  ls =   0
 
 Codon usage in sequences

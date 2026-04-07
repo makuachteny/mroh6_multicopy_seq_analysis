@@ -1,0 +1,241 @@
+IQ-TREE multicore version 2.3.6 for MacOS ARM 64-bit built Jul 30 2024
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor, Heiko Schmidt,
+Dominik Schrempf, Michael Woodhams, Ly Trong Nhan, Thomas Wong
+
+Host:    Makuachs-MacBook-Air.local (SSE4.2, 16 GB RAM)
+Command: iqtree2 -s /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.fasta -st CODON -m MFP -bb 1000 -nt AUTO --prefix /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree -redo --quiet
+Seed:    163989 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Tue Apr  7 15:45:33 2026
+Kernel:  SSE2 - auto-detect threads (8 CPU cores detected)
+
+Reading alignment file /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.fasta ... Fasta format detected
+Reading fasta file: done in 0.000405073 secs using 90.11% CPU
+Alignment most likely contains DNA/RNA sequences
+Converting to codon sequences with genetic code  ...
+Alignment has 28 sequences with 427 columns, 424 distinct patterns
+361 parsimony-informative, 23 singleton sites, 43 constant sites
+                               Gap/Ambiguity  Composition  p-value
+Analyzing sequences: done in 5.48363e-05 secs using 111.2% CPU
+   1  gu_21_chr7_449501_452050        44.96%    passed     77.65%
+   2  gu_23_chr7_800589_803138        44.96%    passed     77.56%
+   3  gu_35_chr7_1026314_1028981      44.50%    failed      0.18%
+   4  gu_45_chr7_1660149_1662710      41.45%    passed     83.33%
+   5  gu_84_chr7_6312003_6314281      50.59%    passed     90.33%
+   6  gu_111_chr7_7175660_7178191     45.20%    passed     80.18%
+   7  gu_128_chr7_8004139_8006735     52.69%    failed      0.11%
+   8  gu_157_chr7_11652456_11655017   41.45%    passed     82.63%
+   9  gu_189_chr7_1133952_1136559     21.55%    passed     99.70%
+  10  gu_197_chr7_1300223_1302786      8.90%    passed     99.47%
+  11  gu_206_chr7_1797468_1800111     23.65%    passed     90.38%
+  12  gu_211_chr7_3099151_3101755     22.72%    passed     99.98%
+  13  gu_221_chr7_3529270_3531263     30.68%    passed     99.81%
+  14  gu_227_chr7_3832214_3833745     47.54%    passed     99.85%
+  15  gu_232_chr7_4010640_4013204      7.49%    passed     99.77%
+  16  gu_241_chr7_5168007_5170656     28.57%    passed     99.99%
+  17  gu_256_chr7_5494587_5496779     32.08%    passed     87.80%
+  18  gu_262_chr7_5602654_5605261     21.31%    passed     99.72%
+  19  gu_272_chr7_5686596_5688589     29.27%    passed     99.73%
+  20  gu_313_chr7_7255024_7257219     32.08%    passed     83.54%
+  21  gu_315_chr7_7337007_7339571      7.49%    passed     99.64%
+  22  gu_321_chr7_7939564_7942127     10.07%    passed     99.59%
+  23  gu_338_chr7_8884105_8886297     32.08%    passed     88.58%
+  24  gu_340_chr7_9103797_9106325      7.96%    passed    100.00%
+  25  gu_350_chr7_9143229_9145757      7.96%    passed     99.99%
+  26  gu_362_chr7_9190397_9192925      7.96%    passed    100.00%
+  27  gu_364_chr7_9198255_9200783      7.96%    passed     99.99%
+  28  gu_366_chr7_9206126_9208654      7.96%    passed     99.99%
+WARNING: 2 sequences contain more than 50% gaps/ambiguity
+****  TOTAL                           27.18%  2 sequences failed composition chi2 test (p-value<5%; df=60)
+
+Creating fast initial parsimony tree by random order stepwise addition...
+0.127 seconds, parsimony score: 1131 (based on 384 sites)
+Measuring multi-threading efficiency up to 8 CPU cores
+Increase to 10 rounds for branch lengths
+9 trees examined
+Threads: 1 / Time: 8.058 sec / Speedup: 1.000 / Efficiency: 100% / LogL: -19222
+Threads: 2 / Time: 5.304 sec / Speedup: 1.519 / Efficiency: 76% / LogL: -19222
+Threads: 3 / Time: 4.127 sec / Speedup: 1.953 / Efficiency: 65% / LogL: -19222
+Threads: 4 / Time: 3.678 sec / Speedup: 2.191 / Efficiency: 55% / LogL: -19222
+Threads: 5 / Time: 3.526 sec / Speedup: 2.285 / Efficiency: 46% / LogL: -19222
+BEST NUMBER OF THREADS: 4
+
+Perform fast likelihood tree search using GY+F3X4+I+G model...
+Estimate model parameters (epsilon = 5.000)
+Perform nearest neighbor interchange...
+Estimate model parameters (epsilon = 1.000)
+1. Initial log-likelihood: -7976.576
+2. Current log-likelihood: -7972.232
+Optimal log-likelihood: -7972.020
+Nonsynonymous/synonymous ratio (omega): 0.997
+Transition/transversion ratio (kappa): 2.072
+Proportion of invariable sites: 0.000
+Gamma shape alpha: 2.387
+Parameters optimization took 2 rounds (2.994 sec)
+Time for fast ML tree search: 9.028 seconds
+
+NOTE: ModelFinder requires 65 MB RAM!
+ModelFinder will test up to 330 codon models (sample size: 427 epsilon: 0.100) ...
+ No. Model         -LnL         df  AIC          AICc         BIC
+  1  GY+F3X4       7889.252     64  15906.504    15929.487    16166.138
+  2  GY+F3X4+I     7884.872     65  15899.743    15923.511    16163.434
+  3  GY+F3X4+G4    7859.921     65  15849.843    15873.610    16113.534
+  4  GY+F3X4+I+G4  7859.919     66  15851.839    15876.406    16119.587
+  5  GY+F3X4+R2    7858.332     66  15848.664    15873.231    16116.412
+  6  GY+F3X4+R3    7857.785     68  15851.570    15877.783    16127.432
+ 14  GY+F3X4+I+R2  7857.864     67  15849.728    15875.110    16121.533
+ 15  GY+F3X4+I+R3  7857.851     69  15853.702    15880.761    16133.620
+ 25  GY+F1X4+G4    7853.461     59  15824.922    15844.214    16064.272
+ 26  GY+F1X4+I+G4  7853.468     60  15826.935    15846.935    16070.342
+ 27  GY+F1X4+R2    7852.925     60  15825.849    15845.849    16069.256
+ 36  GY+F1X4+I+R2  7853.021     61  15828.042    15848.766    16075.506
+ 47  GY+F+G4       7714.636     116 15661.273    15748.834    16131.860
+ 48  GY+F+I+G4     7714.636     117 15663.273    15752.632    16137.916
+ 49  GY+F+R2       7713.538     117 15661.077    15750.436    16135.720
+ 58  GY+F+I+R2     7713.517     118 15663.035    15754.216    16141.735
+ 69  MGK+F3X4+G4   7809.905     65  15749.810    15773.578    16013.501
+ 70  MGK+F3X4+I+G4 7809.921     66  15751.842    15776.408    16019.590
+ 71  MGK+F3X4+R2   7808.483     66  15748.965    15773.532    16016.713
+ 80  MGK+F3X4+I+R2 7808.491     67  15750.982    15776.363    16022.786
+ 91  MGK+F1X4+G4   7820.229     59  15758.458    15777.750    15997.808
+ 92  MGK+F1X4+I+G4 7820.241     60  15760.482    15780.482    16003.889
+ 93  MGK+F1X4+R2   7819.834     60  15759.667    15779.667    16003.075
+102  MGK+F1X4+I+R2 7819.850     61  15761.700    15782.423    16009.164
+113  MG+F3X4+G4    7808.901     64  15745.802    15768.785    16005.436
+114  MG+F3X4+I+G4  7808.911     65  15747.822    15771.590    16011.513
+115  MG+F3X4+R2    7808.478     65  15746.956    15770.724    16010.647
+124  MG+F3X4+I+R2  7808.471     66  15748.941    15773.508    16016.689
+135  MG+F1X4+G4    7820.229     58  15756.457    15775.055    15991.751
+136  MG+F1X4+I+G4  7820.238     59  15758.476    15777.767    15997.826
+137  MG+F1X4+R2    7819.809     59  15757.617    15776.909    15996.967
+146  MG+F1X4+I+R2  7819.814     60  15759.628    15779.628    16003.035
+157  KOSI07+F3X4+G4 8547.717     63  17221.433    17243.648    17477.011
+158  KOSI07+F3X4+I+G4 8547.705     64  17223.409    17246.393    17483.043
+159  KOSI07+F3X4+R2 8531.102     64  17190.203    17213.187    17449.838
+168  KOSI07+F3X4+I+R2 8531.049     65  17192.099    17215.866    17455.790
+179  KOSI07+F1X4+G4 8551.603     57  17217.207    17235.125    17448.443
+180  KOSI07+F1X4+I+G4 8551.607     58  17219.214    17237.812    17454.508
+181  KOSI07+F1X4+R2 8549.059     58  17214.118    17232.716    17449.412
+190  KOSI07+F1X4+I+R2 8549.066     59  17216.132    17235.424    17455.482
+201  KOSI07+F+G4   8364.686     114 16957.372    17041.411    17419.846
+202  KOSI07+F+I+G4 8364.685     115 16959.371    17045.159    17425.901
+203  KOSI07+F+R2   8357.773     115 16945.546    17031.333    17412.076
+212  KOSI07+F+I+R2 8357.792     116 16947.583    17035.145    17418.170
+223  KOSI07+FU+G4  8582.301     54  17272.602    17288.570    17491.668
+224  KOSI07+FU+I+G4 8582.306     55  17274.612    17291.216    17497.735
+225  KOSI07+FU+R2  8563.259     55  17236.519    17253.122    17459.642
+234  KOSI07+FU+I+R2 8563.486     56  17238.973    17256.227    17466.153
+245  SCHN05+F3X4+G4 8675.632     63  17477.264    17499.479    17732.841
+246  SCHN05+F3X4+I+G4 8675.630     64  17479.260    17502.243    17738.894
+247  SCHN05+F3X4+R2 8641.124     64  17410.247    17433.230    17669.881
+256  SCHN05+F3X4+I+R2 8630.321     65  17390.642    17414.409    17654.333
+267  SCHN05+F1X4+G4 8665.748     57  17445.497    17463.415    17676.733
+268  SCHN05+F1X4+I+G4 8665.749     58  17447.498    17466.095    17682.791
+269  SCHN05+F1X4+R2 8661.810     58  17439.619    17458.217    17674.913
+278  SCHN05+F1X4+I+R2 8661.792     59  17441.584    17460.875    17680.934
+289  SCHN05+F+G4   8380.352     114 16988.704    17072.742    17451.177
+290  SCHN05+F+I+G4 8380.352     115 16990.704    17076.492    17457.235
+291  SCHN05+F+R2   8375.664     115 16981.327    17067.115    17447.857
+300  SCHN05+F+I+R2 8375.676     116 16983.352    17070.913    17453.939
+311  SCHN05+FU+G4  8507.980     54  17123.961    17139.928    17343.027
+312  SCHN05+FU+I+G4 8507.981     55  17125.961    17142.565    17349.084
+313  SCHN05+FU+R2  8499.224     55  17108.449    17125.052    17331.572
+322  SCHN05+FU+I+R2 8499.310     56  17110.621    17127.875    17337.801
+Akaike Information Criterion:           GY+F+R2
+Corrected Akaike Information Criterion: GY+F+G4
+Bayesian Information Criterion:         MG+F1X4+G4
+Best-fit model: MG+F1X4+G4 chosen according to BIC
+
+All model information printed to /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.model.gz
+CPU time for ModelFinder: 383.303 seconds (0h:6m:23s)
+Wall-clock time for ModelFinder: 154.326 seconds (0h:2m:34s)
+Generating 1000 samples for ultrafast bootstrap (seed: 163989)...
+
+NOTE: 27 MB RAM (0 GB) is required!
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -7874.166
+2. Current log-likelihood: -7869.033
+Optimal log-likelihood: -7869.028
+Nonsynonymous/synonymous ratio (omega): 1.000
+Transition/transversion ratio (kappa): 2.102
+Gamma shape alpha: 2.327
+Parameters optimization took 2 rounds (2.850 sec)
+Wrote distance file to... 
+Computing ML distances based on estimated model parameters...
+Calculating distance matrix: done in 1.72098 secs using 323.5% CPU
+Computing ML distances took 1.721117 sec (of wall-clock time) 5.568254 sec (of CPU time)
+Setting up auxiliary I and S matrices: done in 8.58307e-05 secs using 50.1% CPU
+Computing RapidNJ tree took 0.003725 sec (of wall-clock time) 0.000603 sec (of CPU time)
+Log-likelihood of RapidNJ tree: -7869.099
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 98 parsimony trees... 0.055 second
+Computing log-likelihood of 98 initial trees ... 31.167 seconds
+Current best score: -7869.028
+
+Do NNI search on 20 best initial trees
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 1: -7869.028
+Estimate model parameters (epsilon = 0.100)
+BETTER TREE FOUND at iteration 2: -7856.693
+Iteration 10 / LogL: -7966.678 / Time: 0h:3m:38s
+Iteration 20 / LogL: -7942.249 / Time: 0h:4m:5s
+Finish initializing candidate tree set (20)
+Current best tree score: -7856.693 / CPU time: 85.987
+Number of iterations: 20
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Iteration 30 / LogL: -7984.298 / Time: 0h:4m:56s (0h:5m:52s left)
+Iteration 40 / LogL: -7967.154 / Time: 0h:5m:41s (0h:4m:56s left)
+Iteration 50 / LogL: -8102.251 / Time: 0h:6m:10s (0h:3m:49s left)
+Log-likelihood cutoff on original alignment: -7949.993
+Iteration 60 / LogL: -8035.017 / Time: 0h:6m:58s (0h:3m:7s left)
+Iteration 70 / LogL: -8080.320 / Time: 0h:7m:35s (0h:2m:19s left)
+Iteration 80 / LogL: -8152.436 / Time: 0h:8m:12s (0h:1m:34s left)
+Iteration 90 / LogL: -8028.410 / Time: 0h:8m:50s (0h:0m:50s left)
+Iteration 100 / LogL: -7985.609 / Time: 0h:9m:22s (0h:0m:8s left)
+Log-likelihood cutoff on original alignment: -7949.993
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 1.000
+TREE SEARCH COMPLETED AFTER 103 ITERATIONS / Time: 0h:9m:32s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -7856.693
+Optimal log-likelihood: -7856.693
+Nonsynonymous/synonymous ratio (omega): 1.031
+Transition/transversion ratio (kappa): 2.102
+Gamma shape alpha: 4.607
+Parameters optimization took 1 rounds (1.174 sec)
+BEST SCORE FOUND : -7856.693
+Creating bootstrap support values...
+Split supports printed to NEXUS file /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.splits.nex
+Total tree length: 6.836
+
+Total number of iterations: 103
+CPU time used for tree search: 1073.521 sec (0h:17m:53s)
+Wall-clock time used for tree search: 412.853 sec (0h:6m:52s)
+Total CPU time used: 1474.040 sec (0h:24m:34s)
+Total wall-clock time used: 573.319 sec (0h:9m:33s)
+
+Computing bootstrap consensus tree...
+Reading input file /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.splits.nex...
+28 taxa and 90 splits.
+Consensus tree written to /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.contree
+Reading input trees file /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.contree
+Log-likelihood of consensus tree: -7981.990
+
+Analysis results written to: 
+  IQ-TREE report:                /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.iqtree
+  Maximum-likelihood tree:       /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.treefile
+  Likelihood distances:          /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.mldist
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.splits.nex
+  Consensus tree:                /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.contree
+  Screen log file:               /Users/makuachtenygatluak/Documents/Research/data/processed/zonotrichia_albicollis/paml_input/mroh6_zonotrichia_albicollis_iqtree.log
+
+Date and Time: Tue Apr  7 15:55:06 2026

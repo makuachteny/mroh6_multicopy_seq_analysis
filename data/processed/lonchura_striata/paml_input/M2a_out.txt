@@ -2,6 +2,6 @@ CODONML (in paml version 4.10.9, 7 May 2025)  /Users/makuachtenygatluak/Document
 Model: One dN/dS ratio, 
 Codon frequency model: F3x4
 Site-class models:  PositiveSelection
-ns =  40  ls =   0
+ns =  39  ls =   0
 
 Codon usage in sequences
